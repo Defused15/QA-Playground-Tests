@@ -1,0 +1,25 @@
+{
+  "name": "qa-playground-tests",
+  "version": "1.0.0",
+  "description": "The QA Playground page has Mini Web Apps that I use to showcase my test skills.",
+  "main": "index.js",
+  "scripts": {
+    "test:range":"npx playwright test tests/rangeslider.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Defused15/QA-Playground-Tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Defused15/QA-Playground-Tests/issues"
+  },
+  "homepage": "https://github.com/Defused15/QA-Playground-Tests#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.18"
+  }
+}
