@@ -1,23 +1,25 @@
 import { Page, Locator } from "@playwright/test";
 
-// RangeSlider class to interact with a range slider component on the page
+/**
+ * RangeSlider class to interact with a range slider component on the page.
+ */
 export class RangeSlider {
-  // Locator for the range input element
+  // Locator for the range input element (the slider itself)
   readonly rangebar: Locator;
-  // Array of Locators for each emoji element in the slider
-  readonly emojis: Locator[];
+  // Locator for the emoji element in the slider
+  readonly emojis: Locator;
+  // Locator for the body element (used to check background color changes)
+  readonly body: Locator;
 
-  // Constructor initializes locators using the provided Playwright Page object
+  /**
+   * Constructor initializes locators using the provided Playwright Page object.
+   */
   constructor(page: Page) {
-    // Locate the range input element
+    // Locate the range input element (the slider itself)
     this.rangebar = page.locator('input[type="range"]');
-    // Locate each emoji in the slider and store them in an array
-    this.emojis = [
-      page.locator("li.slide-emoji").nth(0), // First emoji
-      page.locator("li.slide-emoji").nth(1), // Second emoji
-      page.locator("li.slide-emoji").nth(2), // Third emoji
-      page.locator("li.slide-emoji").nth(3), // Fourth emoji
-      page.locator("li.slide-emoji").nth(4), // Fifth emoji
-    ];
+    // Locate all emoji elements in the slider
+    this.emojis = page.locator("li.slide-emoji");
+    // Locate the body element to check for background color changes
+    this.body = page.locator('body');
   }
 }
