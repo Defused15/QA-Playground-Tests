@@ -20,8 +20,5 @@ test.describe("QR Code Generator Tests", () => {
     await qr.generateButton.click();
     await expect(qr.qrImage).toBeVisible();
     await expect(qr.qrImage).toHaveScreenshot("qr/qr-code.png");
-    /*if (await qr.qrImage.isVisible()) {
-      await qr.qrImage.screenshot({ path: "qr/qr-cod.png" });
-    }*/
   });
 });
