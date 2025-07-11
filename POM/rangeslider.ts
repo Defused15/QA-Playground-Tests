@@ -10,16 +10,19 @@ export class RangeSlider {
   readonly emojis: Locator;
   // Locator for the body element (used to check background color changes)
   readonly body: Locator;
+  // Locator for the Send Feedback button
+  readonly sendFeedbackButton: Locator;
+  // Locator for the Thanks for your feedback message
+  readonly tyText: Locator;
 
   /**
    * Constructor initializes locators using the provided Playwright Page object.
    */
   constructor(page: Page) {
-    // Locate the range input element (the slider itself)
     this.rangebar = page.locator('input[type="range"]');
-    // Locate all emoji elements in the slider
     this.emojis = page.locator("li.slide-emoji");
-    // Locate the body element to check for background color changes
-    this.body = page.locator('body');
+    this.body = page.locator("body");
+    this.sendFeedbackButton = page.locator("button#feedback");
+    this.tyText = page.locator("p#ty-msg");
   }
 }
