@@ -18,6 +18,7 @@ test.describe("QR Code Generator Tests", () => {
   test("Generate QR Code", async ({ page }) => {
     await qr.inputField.fill("https://google.com");
     await qr.generateButton.click();
+    await page.waitForTimeout(1000); // Wait for QR code to generate
     await expect(qr.qrImage).toBeVisible();
     await expect(qr.qrImage).toHaveScreenshot("qr/qr-code.png");
   });
