@@ -23,6 +23,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  snapshotDir: './__snapshots__',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -34,6 +35,7 @@ export default defineConfig({
     video: "retain-on-failure",
     headless: true,
     screenshot: "only-on-failure",
+   
   },
 
   /* Configure projects for major browsers */
