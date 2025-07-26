@@ -4,8 +4,10 @@
   "description": "The QA Playground page has Mini Web Apps that I use to showcase my test skills.",
   "main": "index.js",
   "scripts": {
+    "test:all": "npx playwright test",
     "test:range": "npx playwright test tests/rangeslider.spec.ts",
-    "test:qr": "npx playwright test tests/qr.spec.ts"
+    "test:qr": "npx playwright test tests/qr.spec.ts",
+    "test:api": "npx playwright test tests/api.spec.ts"
   },
   "repository": {
     "type": "git",
