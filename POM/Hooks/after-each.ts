@@ -1,5 +1,4 @@
 import { Page, TestInfo } from "@playwright/test";
-import test from "node:test";
 
 // AFTEREACH hook to be run after each test
 export const AFTEREACH = async (page: Page, testinfo: TestInfo) => {

@@ -7,12 +7,18 @@ The QA Playground page has Mini Web Apps that I use to showcase my test skills.
 ```
 .
 ├── POM/                # Page Object Models and hooks
+│   ├── api.ts
+│   ├── qr.ts
 │   ├── rangeslider.ts
+│   ├── redirect.ts
 │   └── Hooks/
 │       ├── after-each.ts
 │       └── before-each.ts
 ├── tests/              # Playwright test specs
-│   └── rangeslider.spec.ts
+│   ├── api.spec.ts
+│   ├── qr.spec.ts
+│   ├── rangeslider.spec.ts
+│   └── redirect.spec.ts
 ├── playwright.config.ts
 ├── package.json
 ├── .github/

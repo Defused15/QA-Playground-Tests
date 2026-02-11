@@ -7,7 +7,9 @@
     "test:all": "npx playwright test",
     "test:range": "npx playwright test tests/rangeslider.spec.ts",
     "test:qr": "npx playwright test tests/qr.spec.ts",
-    "test:api": "npx playwright test tests/api.spec.ts"
+    "test:api": "npx playwright test tests/api.spec.ts",
+    "test:redirect": "npx playwright test tests/redirect.spec.ts",
+    "test:test": "npx playwright test tests/test.spec.ts"
   },
   "repository": {
     "type": "git",
