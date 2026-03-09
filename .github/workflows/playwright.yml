@@ -8,40 +8,77 @@ on:
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
-    steps:
-      # 1️⃣ 
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
-      # 2️⃣ 
+    # Required so peaceiris/actions-gh-pages can push to the gh-pages branch
+    permissions:
+      contents: write
+
+    steps:
+      # 1️⃣ Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Node
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      # 3️⃣
+      # 3️⃣ Dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣
+      # 4️⃣ Browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 5️⃣ 
+      # 5️⃣ Run tests — outputs native HTML report + JSON (JSON is what we need)
       - name: Run Playwright Tests
         run: npx playwright test --reporter=html,json
+        # JSON is written to: playwright-report/report.json  (default path)
+        # To change the path use: PLAYWRIGHT_JSON_OUTPUT_NAME=./results/report.json
+        continue-on-error: true   # don't abort the job on failures; we still want the report
 
-      # 6️⃣ 
-      - name: Upload HTML Report
+      # 6️⃣ Generate the custom dashboard from the JSON output
+      - name: Generate custom dashboard
+        run: |
+          node generate-dashboard.mjs \
+            --json      ./playwright-report/report.json \
+            --html      ./playwright-report/dashboard.html \
+            --template  ./reporter-template.html
+
+      # 7️⃣ Upload the full report folder as a downloadable artifact
+      - name: Upload reports as artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: playwright-report
-          path: playwright-report
+          path: playwright-report/
+          retention-days: 30
 
-      # 7️⃣ 
-      - name: Deploy Playwright Report to GitHub Pages
+      # 8️⃣ Deploy to GitHub Pages (main branch only)
+      #    Custom dashboard: https://<user>.github.io/<repo>/dashboard.html
+      #    Native report:    https://<user>.github.io/<repo>/index.html
+      - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./playwright-report
+          # Keeps the gh-pages branch history clean (single orphan commit)
+          force_orphan: true
+
+      # 9️⃣ Fail the job AFTER publishing the report if any tests failed
+      - name: Check test results
+        run: |
+          if [ -f ./playwright-report/report.json ]; then
+            UNEXPECTED=$(node -e "
+              const r = JSON.parse(require('fs').readFileSync('./playwright-report/report.json'));
+              console.log(r.stats?.unexpected ?? 0);
+            ")
+            if [ "$UNEXPECTED" -gt "0" ]; then
+              echo "❌ $UNEXPECTED test(s) failed"
+              exit 1
+            fi
+          fi

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playwright · Test Report</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:     #faf9f7;
+    --paper2:    #f4f2ee;
+    --paper3:    #ede9e3;
+    --ink:       #1a1814;
+    --ink2:      #4a4640;
+    --ink3:      #8c877f;
+    --ink4:      #b8b2a8;
+    --line:      #e4dfd7;
+    --line2:     #d8d1c7;
+    --pass:      #2d6a3f;
+    --pass-bg:   #edf5f0;
+    --fail:      #8b2020;
+    --fail-bg:   #fdf0f0;
+    --flaky:     #7a5c10;
+    --flaky-bg:  #fdf6e3;
+    --skip:      #5a5450;
+    --skip-bg:   #f2f0ed;
+    --chromium:  #1a56a0;
+    --firefox:   #b54800;
+    --webkit:    #5c3080;
+    --shadow:    0 1px 3px rgba(26,24,20,0.06);
+    --shadow2:   0 2px 8px rgba(26,24,20,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: 56px 40px 80px; }
+
+  /* Header */
+  .header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding-bottom: 28px; border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 40px; animation: appear .5s ease both;
+  }
+  .eyebrow { font-size: 10px; font-weight: 500; letter-spacing:.18em; text-transform:uppercase; color:var(--ink3); margin-bottom:4px; }
+  h1 { font-size:28px; font-weight:300; letter-spacing:-.02em; color:var(--ink); line-height:1.1; }
+  h1 strong { font-weight:600; }
+  .header-meta { text-align:right; display:flex; flex-direction:column; gap:4px; align-items:flex-end; }
+  .meta-line { font-size:12px; color:var(--ink3); font-family:'DM Mono',monospace; font-weight:300; }
+  .status-pill { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:4px; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; border:1px solid; }
+  .status-pill.ok   { background:var(--pass-bg); color:var(--pass);  border-color:#b8d9c2; }
+  .status-pill.fail { background:var(--fail-bg); color:var(--fail);  border-color:#e8bbbb; }
+  .status-dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
+
+  /* Section labels */
+  .section-label { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--ink4); margin-bottom:14px; margin-top:40px; }
+
+  /* Stats row */
+  .stats-row { display:grid; grid-template-columns:repeat(6,1fr); border:1px solid var(--line2); border-radius:8px; overflow:hidden; background:white; box-shadow:var(--shadow); animation:appear .5s .05s ease both; }
+  .stat-cell { padding:22px 18px; border-right:1px solid var(--line); }
+  .stat-cell:last-child { border-right:none; }
+  .stat-num { font-family:'DM Mono',monospace; font-size:30px; font-weight:400; line-height:1; margin-bottom:6px; color:var(--ink); }
+  .stat-cell.passed .stat-num { color:var(--pass); }
+  .stat-cell.failed .stat-num { color:var(--fail); }
+  .stat-cell.flaky  .stat-num { color:var(--flaky); }
+  .stat-cell.dur    .stat-num { font-size:20px; }
+  .stat-name { font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--ink4); }
+
+  /* Insights */
+  .insights-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; animation:appear .5s .1s ease both; }
+  .insight-card { background:white; border:1px solid var(--line); border-radius:8px; padding:18px 20px; box-shadow:var(--shadow); }
+  .insight-card:hover { border-color:var(--line2); box-shadow:var(--shadow2); }
+  .insight-label { font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--ink4); margin-bottom:4px; }
+  .insight-value { font-family:'DM Mono',monospace; font-size:17px; font-weight:400; color:var(--ink); line-height:1.2; }
+  .insight-sub { font-size:11px; color:var(--ink3); margin-top:2px; }
+
+  /* Two col */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; animation:appear .5s .15s ease both; }
+  .panel { background:white; border:1px solid var(--line); border-radius:8px; padding:24px 24px 20px; box-shadow:var(--shadow); }
+  .panel-title { font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+
+  /* Donut */
+  .donut-layout { display:flex; align-items:center; gap:28px; }
+  .donut-legend { display:flex; flex-direction:column; gap:10px; flex:1; }
+  .legend-row { display:flex; align-items:center; gap:9px; font-size:13px; }
+  .legend-swatch { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+  .legend-name { color:var(--ink2); flex:1; }
+  .legend-count { font-family:'DM Mono',monospace; font-size:12px; color:var(--ink3); }
+
+  /* Browser bars */
+  .browser-rows { display:flex; flex-direction:column; gap:16px; }
+  .browser-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .browser-name { font-size:13px; font-weight:500; color:var(--ink2); display:flex; align-items:center; gap:7px; }
+  .browser-swatch { width:7px; height:7px; border-radius:50%; }
+  .browser-info { font-family:'DM Mono',monospace; font-size:11px; color:var(--ink4); }
+  .bar-track { height:4px; background:var(--paper3); border-radius:2px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:2px; transition:width 1.1s cubic-bezier(.16,1,.3,1); }
+
+  /* Test table */
+  .table-wrap { background:white; border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); overflow:hidden; animation:appear .5s .2s ease both; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead { background:var(--paper2); border-bottom:1px solid var(--line2); }
+  th { font-size:10px; font-weight:500; letter-spacing:.13em; text-transform:uppercase; color:var(--ink4); text-align:left; padding:11px 18px; white-space:nowrap; }
+  td { padding:13px 18px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:var(--paper); }
+  .test-title { font-size:13px; font-weight:500; color:var(--ink); }
+  .test-path { font-family:'DM Mono',monospace; font-size:10px; color:var(--ink4); margin-top:2px; }
+  .test-error { font-family:'DM Mono',monospace; font-size:10px; color:var(--fail); margin-top:4px; white-space:pre-wrap; word-break:break-word; max-width:360px; }
+
+  /* Chips */
+  .chip { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:3px; font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; border:1px solid transparent; }
+  .chip.pass  { background:var(--pass-bg);  color:var(--pass);  border-color:#c6dece; }
+  .chip.fail  { background:var(--fail-bg);  color:var(--fail);  border-color:#e8c4c4; }
+  .chip.flaky { background:var(--flaky-bg); color:var(--flaky); border-color:#e5d9a8; }
+  .chip.skip  { background:var(--skip-bg);  color:var(--skip);  border-color:#d8d5d0; }
+  .bchip { display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:3px; font-size:11px; background:var(--paper2); color:var(--ink2); border:1px solid var(--line); }
+  .bchip-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+
+  /* Duration */
+  .dur { font-family:'DM Mono',monospace; font-size:12px; color:var(--ink2); white-space:nowrap; }
+  .dur-bar { margin-top:4px; }
+
+  /* Footer */
+  .footer { margin-top:56px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+  .footer-text { font-size:11px; color:var(--ink4); font-family:'DM Mono',monospace; }
+
+  /* Animations */
+  @keyframes appear { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:860px) {
+    .stats-row { grid-template-columns:repeat(3,1fr); }
+    .two-col   { grid-template-columns:1fr; }
+    .insights-row { grid-template-columns:1fr 1fr; }
+  }
+  @media(max-width:560px) {
+    .page { padding:32px 20px 60px; }
+    .stats-row { grid-template-columns:repeat(2,1fr); }
+    .insights-row { grid-template-columns:1fr; }
+    .header { flex-direction:column; align-items:flex-start; gap:16px; }
+    .header-meta { text-align:left; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <div class="header-title">
+      <div class="eyebrow">Playwright · Test Report</div>
+      <h1 id="h1-title"><strong>Test Suite</strong></h1>
+    </div>
+    <div class="header-meta">
+      <span class="meta-line" id="run-date">—</span>
+      <span class="meta-line" id="run-duration">—</span>
+      <span class="status-pill ok" id="status-pill">
+        <span class="status-dot"></span>
+        <span id="status-text">All passed</span>
+      </span>
+    </div>
+  </header>
+
+  <div class="section-label">Summary</div>
+  <div class="stats-row" id="stats-row"></div>
+
+  <div class="section-label">Insights</div>
+  <div class="insights-row" id="insights-row"></div>
+
+  <div class="section-label">Breakdown</div>
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-title">Result Distribution</div>
+      <div class="donut-layout">
+        <svg id="donut" width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0"></svg>
+        <div class="donut-legend" id="donut-legend"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Browser Performance</div>
+      <div class="browser-rows" id="browser-rows"></div>
+    </div>
+  </div>
+
+  <div class="section-label">Test Results</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Test</th>
+          <th>Browser</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>Retries</th>
+        </tr>
+      </thead>
+      <tbody id="test-tbody"></tbody>
+    </table>
+  </div>
+
+  <footer class="footer">
+    <span class="footer-text" id="footer-left">—</span>
+    <span class="footer-text">playwright report</span>
+  </footer>
+
+</div>
+
+<script>
+// ── DATA (injected by generate-dashboard.mjs) ─────────────────────────────────
+const DATA = /* __PLAYWRIGHT_DATA__ */;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const fmtDur  = ms => ms >= 1000 ? (ms/1000).toFixed(2)+'s' : ms+'ms';
+const fmtDate = ts => {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+       + '  ' + d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+};
+const browserColor = { chromium:'#1a56a0', firefox:'#b54800', webkit:'#5c3080' };
+const donutColors  = { Passed:'#2d6a3f', Failed:'#8b2020', Flaky:'#7a5c10', Skipped:'#8c877f' };
+const donutBg      = { Passed:'#a8d5b5', Failed:'#e8b4b4', Flaky:'#e5d9a8', Skipped:'#cac6c0' };
+
+// ── Header ────────────────────────────────────────────────────────────────────
+const specFiles = [...new Set(DATA.tests.map(t => t.file))];
+document.getElementById('h1-title').innerHTML = `<strong>${specFiles.join(', ')}</strong>`;
+document.getElementById('run-date').textContent     = fmtDate(DATA.startTime);
+document.getElementById('run-duration').textContent = 'duration ' + fmtDur(DATA.duration);
+document.getElementById('footer-left').textContent  = `workers: ${DATA.workers}`;
+
+if (!DATA.stats.ok) {
+  const pill = document.getElementById('status-pill');
+  pill.className = 'status-pill fail';
+  document.getElementById('status-text').textContent = 'Failures detected';
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+document.getElementById('stats-row').innerHTML = [
+  { cls:'',       label:'Total',    val: DATA.stats.total },
+  { cls:'passed', label:'Passed',   val: DATA.stats.expected },
+  { cls:'failed', label:'Failed',   val: DATA.stats.unexpected },
+  { cls:'flaky',  label:'Flaky',    val: DATA.stats.flaky },
+  { cls:'',       label:'Skipped',  val: DATA.stats.skipped },
+  { cls:'dur',    label:'Run time', val: fmtDur(DATA.duration) },
+].map(s => `
+  <div class="stat-cell ${s.cls}">
+    <div class="stat-num">${s.val}</div>
+    <div class="stat-name">${s.label}</div>
+  </div>`).join('');
+
+// ── Insights ──────────────────────────────────────────────────────────────────
+const durs    = DATA.tests.map(t => t.duration);
+const avgDur  = Math.round(durs.reduce((a,b)=>a+b,0) / (durs.length||1));
+const maxDur  = Math.max(...durs);
+const minDur  = Math.min(...durs);
+const slowest = DATA.tests.find(t => t.duration === maxDur) ?? {};
+const fastest = DATA.tests.find(t => t.duration === minDur) ?? {};
+const pRate   = DATA.stats.total ? ((DATA.stats.expected/DATA.stats.total)*100).toFixed(0)+'%' : '—';
+
+document.getElementById('insights-row').innerHTML = [
+  { label:'Pass rate',    value: pRate,           sub: `${DATA.stats.expected} / ${DATA.stats.total} tests` },
+  { label:'Fastest',      value: fmtDur(minDur),  sub: `${fastest.title ?? '—'} · ${fastest.project ?? '—'}` },
+  { label:'Slowest',      value: fmtDur(maxDur),  sub: `${slowest.title ?? '—'} · ${slowest.project ?? '—'}` },
+  { label:'Avg duration', value: fmtDur(avgDur),  sub: 'across all browsers' },
+  { label:'Browsers',     value: DATA.projectNames.length, sub: DATA.projectNames.join(', ') },
+  { label:'Spec files',   value: specFiles.length, sub: specFiles.join(', ') },
+].map(i => `
+  <div class="insight-card">
+    <div class="insight-label">${i.label}</div>
+    <div class="insight-value">${i.value}</div>
+    <div class="insight-sub">${i.sub}</div>
+  </div>`).join('');
+
+// ── Donut ─────────────────────────────────────────────────────────────────────
+const donutData = [
+  { label:'Passed',  val: DATA.stats.expected },
+  { label:'Failed',  val: DATA.stats.unexpected },
+  { label:'Flaky',   val: DATA.stats.flaky },
+  { label:'Skipped', val: DATA.stats.skipped },
+].filter(d => d.val > 0);
+
+const tot = donutData.reduce((s,d)=>s+d.val,0) || 1;
+const cx=60, cy=60, R=46, sw=13, C=2*Math.PI*R;
+let off=0;
+const svg = document.getElementById('donut');
+svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#ede9e3" stroke-width="${sw}"/>`;
+
+donutData.forEach(({label,val}) => {
+  const len = (val/tot)*C;
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r',R);
+  c.setAttribute('fill','none');
+  c.setAttribute('stroke', donutColors[label]);
+  c.setAttribute('stroke-width', sw);
+  c.setAttribute('stroke-dasharray', `${len} ${C-len}`);
+  c.setAttribute('stroke-dashoffset', -(off*C));
+  c.setAttribute('transform', `rotate(-90 ${cx} ${cy})`);
+  c.setAttribute('opacity','0.85');
+  svg.appendChild(c);
+  off += val/tot;
+});
+
+svg.innerHTML += `
+  <text x="${cx}" y="${cy-5}" text-anchor="middle" dominant-baseline="middle"
+    font-family="'DM Mono',monospace" font-size="15" fill="#1a1814">${((DATA.stats.expected/tot)*100).toFixed(0)}%</text>
+  <text x="${cx}" y="${cy+11}" text-anchor="middle" dominant-baseline="middle"
+    font-family="'DM Sans',sans-serif" font-size="9" fill="#8c877f" letter-spacing=".08em">PASS RATE</text>`;
+
+document.getElementById('donut-legend').innerHTML = donutData.map(d => `
+  <div class="legend-row">
+    <div class="legend-swatch" style="background:${donutBg[d.label]};border:1px solid ${donutColors[d.label]}44"></div>
+    <span class="legend-name">${d.label}</span>
+    <span class="legend-count">${d.val}</span>
+  </div>`).join('');
+
+// ── Browser bars ──────────────────────────────────────────────────────────────
+const bStats = {};
+DATA.tests.forEach(t => {
+  if (!bStats[t.project]) bStats[t.project] = { total:0, passed:0, dur:0 };
+  bStats[t.project].total++;
+  if (t.outcome==='expected') bStats[t.project].passed++;
+  bStats[t.project].dur += t.duration;
+});
+
+const maxB = Math.max(...Object.values(bStats).map(b=>b.total), 1);
+document.getElementById('browser-rows').innerHTML = Object.entries(bStats).map(([name, s]) => {
+  const color = browserColor[name] || '#555';
+  return `
+    <div>
+      <div class="browser-top">
+        <div class="browser-name">
+          <div class="browser-swatch" style="background:${color}"></div>
+          ${name.charAt(0).toUpperCase()+name.slice(1)}
+        </div>
+        <div class="browser-info">${s.passed}/${s.total} · avg ${fmtDur(Math.round(s.dur/s.total))}</div>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${((s.total/maxB)*100).toFixed(0)}%;background:${color};opacity:.65"></div>
+      </div>
+    </div>`;
+}).join('');
+
+// ── Test table ────────────────────────────────────────────────────────────────
+const chipMap   = { expected:'pass', unexpected:'fail', flaky:'flaky', skipped:'skip' };
+const chipLabel = { expected:'Passed', unexpected:'Failed', flaky:'Flaky', skipped:'Skipped' };
+const maxDuration = Math.max(...DATA.tests.map(t=>t.duration), 1);
+
+document.getElementById('test-tbody').innerHTML = DATA.tests.map(t => {
+  const bColor = browserColor[t.project] || '#555';
+  const cls    = chipMap[t.outcome]   || 'skip';
+  const lbl    = chipLabel[t.outcome] || t.outcome;
+  const barW   = ((t.duration/maxDuration)*100).toFixed(0);
+  const errHtml = t.error
+    ? `<div class="test-error">${t.error.replace(/</g,'&lt;').slice(0,200)}…</div>`
+    : '';
+  return `
+    <tr>
+      <td>
+        <div class="test-title">${t.title}</div>
+        <div class="test-path">${t.file}:${t.line}</div>
+        ${errHtml}
+      </td>
+      <td><span class="bchip"><span class="bchip-dot" style="background:${bColor}"></span>${t.project}</span></td>
+      <td><span class="chip ${cls}">${lbl}</span></td>
+      <td>
+        <div class="dur">${fmtDur(t.duration)}</div>
+        <div class="dur-bar">
+          <div class="bar-track" style="width:100px">
+            <div class="bar-fill" style="width:${barW}%;background:${bColor};opacity:.5"></div>
+          </div>
+        </div>
+      </td>
+      <td><span class="dur">${t.retries}</span></td>
+    </tr>`;
+}).join('');
+</script>
+</body>
+</html>
