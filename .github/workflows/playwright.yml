@@ -91,60 +91,73 @@ jobs:
           HUB_REPO: Defused15/test-hub
           PROJECT_NAME: QA-Playground-Tests
         run: |
-          REPORT_PATH="./playwright-report/report.json"
+          node -e "
+            const fs = require('fs');
+            const https = require('https');
 
-          if [ ! -f "$REPORT_PATH" ]; then
-            echo "⚠️  report.json not found, skipping hub upload"
-            exit 0
-          fi
+            const reportPath = './playwright-report/report.json';
+            if (!fs.existsSync(reportPath)) {
+              console.log('⚠️  report.json not found, skipping');
+              process.exit(0);
+            }
 
-          CONTENT=$(base64 -w 0 "$REPORT_PATH")
+            const content = fs.readFileSync(reportPath).toString('base64');
+            const token   = process.env.HUB_TOKEN;
+            const repo    = process.env.HUB_REPO;
+            const project = process.env.PROJECT_NAME;
+            const apiPath = '/repos/' + repo + '/contents/projects/' + project + '/latest.json';
 
-          API_URL="https://api.github.com/repos/${HUB_REPO}/contents/projects/${PROJECT_NAME}/latest.json"
+            const options = {
+              hostname: 'api.github.com',
+              path: apiPath,
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/vnd.github+json',
+                'User-Agent': 'qa-hub'
+              }
+            };
 
-          EXISTING=$(curl -s -H "Authorization: Bearer ${HUB_TOKEN}" \
-                             -H "Accept: application/vnd.github+json" \
-                             "$API_URL")
+            const req = https.request(options, res => {
+              let data = '';
+              res.on('data', c => data += c);
+              res.on('end', () => {
+                let sha = '';
+                try { sha = JSON.parse(data).sha || ''; } catch {}
 
-          SHA=$(echo "$EXISTING" | node -e "
-            let d=''; process.stdin.on('data',c=>d+=c);
-            process.stdin.on('end',()=>{
-              try { const j=JSON.parse(d); console.log(j.sha||''); }
-              catch { console.log(''); }
+                const body = JSON.stringify({
+                  message: 'chore: update ' + project + ' report [skip ci]',
+                  content,
+                  ...(sha ? { sha } : {})
+                });
+
+                const put = https.request({
+                  hostname: 'api.github.com',
+                  path: apiPath,
+                  method: 'PUT',
+                  headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Accept': 'application/vnd.github+json',
+                    'User-Agent': 'qa-hub',
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(body)
+                  }
+                }, r => {
+                  let out = '';
+                  r.on('data', c => out += c);
+                  r.on('end', () => {
+                    if (r.statusCode === 200 || r.statusCode === 201) {
+                      console.log('✅  Report pushed to hub (HTTP ' + r.statusCode + ')');
+                    } else {
+                      console.error('❌  Failed (HTTP ' + r.statusCode + ')');
+                      console.error(out);
+                      process.exit(1);
+                    }
+                  });
+                });
+                put.write(body);
+                put.end();
+              });
             });
-          ")
-
-          if [ -n "$SHA" ]; then
-            PAYLOAD=$(node -e "
-              console.log(JSON.stringify({
-                message: 'chore: update ${PROJECT_NAME} report [skip ci]',
-                content: process.env.CONTENT,
-                sha: process.env.SHA
-              }));
-            " SHA="$SHA" CONTENT="$CONTENT")
-          else
-            PAYLOAD=$(node -e "
-              console.log(JSON.stringify({
-                message: 'chore: add ${PROJECT_NAME} report [skip ci]',
-                content: process.env.CONTENT
-              }));
-            " CONTENT="$CONTENT")
-          fi
-
-          RESPONSE=$(curl -s -w "\n%{http_code}" \
-            -X PUT \
-            -H "Authorization: Bearer ${HUB_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            -H "Content-Type: application/json" \
-            -d "$PAYLOAD" \
-            "$API_URL")
-
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-
-          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
-            echo "✅  Report pushed to hub (HTTP $HTTP_CODE)"
-          else
-            echo "❌  Failed to push report (HTTP $HTTP_CODE)"
-            echo "$RESPONSE" | head -1
-            exit 1
-          fi
+            req.end();
+          "
