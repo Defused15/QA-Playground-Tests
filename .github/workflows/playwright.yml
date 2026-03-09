@@ -35,9 +35,9 @@ jobs:
 
       # 5️⃣ Run tests — outputs native HTML report + JSON (JSON is what we need)
       - name: Run Playwright Tests
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: playwright-report/report.json
         run: npx playwright test --reporter=html,json
-        # JSON is written to: playwright-report/report.json  (default path)
-        # To change the path use: PLAYWRIGHT_JSON_OUTPUT_NAME=./results/report.json
         continue-on-error: true   # don't abort the job on failures; we still want the report
 
       # 6️⃣ Generate the custom dashboard from the JSON output

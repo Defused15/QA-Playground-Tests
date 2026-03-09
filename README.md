@@ -1,88 +1,141 @@
-# QA-Playground-Tests
+# QA Playground Tests
 
-The QA Playground page has Mini Web Apps that I use to showcase my test skills.
+> Automated E2E test suite for [qaplayground.dev](https://qaplayground.dev) — built with Playwright, structured with Page Object Model, and deployed with GitHub Actions.
+
+[![Tests](https://github.com/Defused15/QA-Playground-Tests/actions/workflows/playwright.yml/badge.svg)](https://github.com/Defused15/QA-Playground-Tests/actions/workflows/playwright.yml)
+[![Playwright](https://img.shields.io/badge/tested%20with-Playwright-45ba4b?logo=playwright)](https://playwright.dev/)
+[![License: ISC](https://img.shields.io/badge/license-ISC-blue)](LICENSE)
+
+---
+
+## 📊 Test Reports
+
+| Report | Link |
+|--------|------|
+| 🎨 Custom Dashboard | [defused15.github.io/QA-Playground-Tests/dashboard.html](https://defused15.github.io/QA-Playground-Tests/dashboard.html) |
+| 🎭 Playwright Native | [defused15.github.io/QA-Playground-Tests](https://defused15.github.io/QA-Playground-Tests/) |
+
+Reports are automatically deployed to GitHub Pages on every push to `main`.
+
+---
 
 ## Project Structure
 
 ```
-.
-├── POM/                # Page Object Models and hooks
+QA-Playground-Tests/
+│
+├── POM/                          # Page Object Models
 │   ├── api.ts
 │   ├── qr.ts
 │   ├── rangeslider.ts
 │   ├── redirect.ts
 │   └── Hooks/
-│       ├── after-each.ts
-│       └── before-each.ts
-├── tests/              # Playwright test specs
+│       ├── before-each.ts
+│       └── after-each.ts
+│
+├── tests/                        # Playwright test specs
 │   ├── api.spec.ts
 │   ├── qr.spec.ts
 │   ├── rangeslider.spec.ts
 │   └── redirect.spec.ts
+│
+├── reporter-template.html        # Custom dashboard template
+├── generate-dashboard.mjs        # Dashboard generation script
 ├── playwright.config.ts
 ├── package.json
-├── .github/
-│   └── workflows/
-│       └── playwright.yml
-├── .gitignore
-└── README.md
+│
+└── .github/
+    └── workflows/
+        └── playwright.yml        # CI/CD pipeline
 ```
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (LTS recommended)
+- [Node.js](https://nodejs.org/) v20+ (LTS recommended)
 - [npm](https://www.npmjs.com/)
 
 ### Installation
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Defused15/QA-Playground-Tests.git
-   cd QA-Playground-Tests
-   ```
+```sh
+# Clone the repo
+git clone https://github.com/Defused15/QA-Playground-Tests.git
+cd QA-Playground-Tests
 
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. Install Playwright browsers:
-   ```sh
-   npx playwright install
-   ```
+# Install Playwright browsers
+npx playwright install
+```
 
 ### Running Tests
 
-To run the range slider tests:
-
 ```sh
-npm run test:range
-```
-
-Or run all Playwright tests:
-
-```sh
+# Run all tests
 npx playwright test
+
+# Run a specific suite
+npm run test:range
+
+# Run with the JSON reporter (required for the custom dashboard)
+npx playwright test --reporter=html,json
 ```
 
-Test results and HTML reports will be available in the `playwright-report/` directory.
+### Generating the Custom Dashboard
 
-### CI Integration
+After running tests with the JSON reporter, generate the dashboard locally:
 
-This project uses GitHub Actions for CI. See [.github/workflows/playwright.yml](.github/workflows/playwright.yml).
+```sh
+node generate-dashboard.mjs \
+  --json     ./playwright-report/report.json \
+  --html     ./playwright-report/dashboard.html \
+  --template ./reporter-template.html
+```
 
-## Project Details
+Then open `playwright-report/dashboard.html` in your browser.
 
-- **Test Framework:** [Playwright](https://playwright.dev/)
-- **Tested App:** [QA Playground](https://qaplayground.dev)
-- **Page Object Model:** Implemented in [POM/rangeslider.ts](POM/rangeslider.ts)
-- **Custom Hooks:** See [POM/Hooks/before-each.ts](POM/Hooks/before-each.ts) and [POM/Hooks/after-each.ts](POM/Hooks/after-each.ts)
+---
+
+## CI / CD
+
+This project uses **GitHub Actions** to run the full test suite on every push to `main` or `dev`, and on every pull request.
+
+The pipeline:
+1. Installs dependencies and Playwright browsers
+2. Runs all tests across Chromium, Firefox, and WebKit
+3. Generates the custom HTML dashboard from the JSON output
+4. Uploads the report folder as a downloadable artifact (retained 30 days)
+5. Deploys both reports to GitHub Pages
+
+See the full workflow: [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)
+
+---
+
+## Stack
+
+| Tool | Purpose |
+|------|---------|
+| [Playwright](https://playwright.dev/) | E2E test framework |
+| [TypeScript](https://www.typescriptlang.org/) | Language |
+| [Page Object Model](https://playwright.dev/docs/pom) | Test architecture |
+| [GitHub Actions](https://github.com/features/actions) | CI/CD |
+| [GitHub Pages](https://pages.github.com/) | Report hosting |
+
+---
+
+## Tested Features
+
+- **API Mini App** — request/response validation
+- **QR Code Generator** — output and rendering checks
+- **Range Slider** — value and interaction tests
+- **Redirect** — navigation and history behavior
+
+---
 
 ## License
 
-ISC
-
----
-Feel free to contribute or open issues!
+ISC — feel free to fork, adapt, or contribute.
