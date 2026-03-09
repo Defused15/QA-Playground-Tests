@@ -126,7 +126,7 @@ jobs:
                 try { sha = JSON.parse(data).sha || ''; } catch {}
 
                 const body = JSON.stringify({
-                  message: 'chore: update ' + project + ' report [skip ci]',
+                  message: 'chore: update ' + project + ' report',
                   content,
                   ...(sha ? { sha } : {})
                 });
