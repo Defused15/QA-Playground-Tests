@@ -9,6 +9,7 @@
     "test:qr": "npx playwright test tests/qr.spec.ts",
     "test:api": "npx playwright test tests/api.spec.ts",
     "test:redirect": "npx playwright test tests/redirect.spec.ts",
+    "test:menu": "npx playwright test tests/menu.spec.ts",
     "test:test": "npx playwright test tests/test.spec.ts"
   },
   "repository": {
