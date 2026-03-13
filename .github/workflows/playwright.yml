@@ -84,80 +84,10 @@ jobs:
           fi
 
       # 🔟 Push report to QA Hub so the combined dashboard picks it up
-      - name: Push report to QA Hub
+      - name: Playwright Report & Push to QA Hub
         if: always()
-        env:
-          HUB_TOKEN: ${{ secrets.HUB_TOKEN }}
-          HUB_REPO: Defused15/test-hub
-          PROJECT_NAME: QA-Playground-Tests
-        run: |
-          node -e "
-            const fs = require('fs');
-            const https = require('https');
-
-            const reportPath = './playwright-report/report.json';
-            if (!fs.existsSync(reportPath)) {
-              console.log('⚠️  report.json not found, skipping');
-              process.exit(0);
-            }
-
-            const content = fs.readFileSync(reportPath).toString('base64');
-            const token   = process.env.HUB_TOKEN;
-            const repo    = process.env.HUB_REPO;
-            const project = process.env.PROJECT_NAME;
-            const apiPath = '/repos/' + repo + '/contents/projects/' + project + '/latest.json';
-
-            const options = {
-              hostname: 'api.github.com',
-              path: apiPath,
-              method: 'GET',
-              headers: {
-                'Authorization': 'Bearer ' + token,
-                'Accept': 'application/vnd.github+json',
-                'User-Agent': 'qa-hub'
-              }
-            };
-
-            const req = https.request(options, res => {
-              let data = '';
-              res.on('data', c => data += c);
-              res.on('end', () => {
-                let sha = '';
-                try { sha = JSON.parse(data).sha || ''; } catch {}
-
-                const body = JSON.stringify({
-                  message: 'chore: update ' + project + ' report',
-                  content,
-                  ...(sha ? { sha } : {})
-                });
-
-                const put = https.request({
-                  hostname: 'api.github.com',
-                  path: apiPath,
-                  method: 'PUT',
-                  headers: {
-                    'Authorization': 'Bearer ' + token,
-                    'Accept': 'application/vnd.github+json',
-                    'User-Agent': 'qa-hub',
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(body)
-                  }
-                }, r => {
-                  let out = '';
-                  r.on('data', c => out += c);
-                  r.on('end', () => {
-                    if (r.statusCode === 200 || r.statusCode === 201) {
-                      console.log('✅  Report pushed to hub (HTTP ' + r.statusCode + ')');
-                    } else {
-                      console.error('❌  Failed (HTTP ' + r.statusCode + ')');
-                      console.error(out);
-                      process.exit(1);
-                    }
-                  });
-                });
-                put.write(body);
-                put.end();
-              });
-            });
-            req.end();
-          "
+        uses: ./.github/actions/playwright-report-hub
+        with:
+          hub_token: ${{ secrets.HUB_TOKEN }}
+          hub_repo: Defused15/test-hub
+          project_name: QA-Playground-Tests

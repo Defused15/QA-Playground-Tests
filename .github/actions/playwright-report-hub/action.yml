@@ -1,0 +1,99 @@
+name: Playwright Report & Push to QA Hub
+description: Pushes a Playwright JSON report to a centralised QA Hub repository.
+
+inputs:
+  hub_token:
+    description: Personal Access Token with write access to the hub repo.
+    required: true
+  hub_repo:
+    description: 'Hub repository in owner/repo format (e.g. Defused15/test-hub).'
+    required: true
+  project_name:
+    description: Unique name for this project inside the hub (used as the folder name).
+    required: true
+  report_path:
+    description: Path to the Playwright JSON report file.
+    required: false
+    default: './playwright-report/report.json'
+
+runs:
+  using: composite
+  steps:
+    - name: Push report to QA Hub
+      shell: bash
+      env:
+        HUB_TOKEN: ${{ inputs.hub_token }}
+        HUB_REPO: ${{ inputs.hub_repo }}
+        PROJECT_NAME: ${{ inputs.project_name }}
+        REPORT_PATH: ${{ inputs.report_path }}
+      run: |
+        node -e "
+          const fs   = require('fs');
+          const https = require('https');
+
+          const reportPath = process.env.REPORT_PATH;
+          if (!fs.existsSync(reportPath)) {
+            console.log('⚠️  ' + reportPath + ' not found, skipping hub push');
+            process.exit(0);
+          }
+
+          const content = fs.readFileSync(reportPath).toString('base64');
+          const token   = process.env.HUB_TOKEN;
+          const repo    = process.env.HUB_REPO;
+          const project = process.env.PROJECT_NAME;
+          const apiPath = '/repos/' + repo + '/contents/projects/' + project + '/latest.json';
+
+          const getOpts = {
+            hostname: 'api.github.com',
+            path: apiPath,
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Accept': 'application/vnd.github+json',
+              'User-Agent': 'qa-hub'
+            }
+          };
+
+          const req = https.request(getOpts, res => {
+            let data = '';
+            res.on('data', c => data += c);
+            res.on('end', () => {
+              let sha = '';
+              try { sha = JSON.parse(data).sha || ''; } catch {}
+
+              const body = JSON.stringify({
+                message: 'chore: update ' + project + ' report',
+                content,
+                ...(sha ? { sha } : {})
+              });
+
+              const put = https.request({
+                hostname: 'api.github.com',
+                path: apiPath,
+                method: 'PUT',
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'Accept': 'application/vnd.github+json',
+                  'User-Agent': 'qa-hub',
+                  'Content-Type': 'application/json',
+                  'Content-Length': Buffer.byteLength(body)
+                }
+              }, r => {
+                let out = '';
+                r.on('data', c => out += c);
+                r.on('end', () => {
+                  if (r.statusCode === 200 || r.statusCode === 201) {
+                    console.log('✅  Report pushed to hub (HTTP ' + r.statusCode + ')');
+                  } else {
+                    console.error('❌  Failed (HTTP ' + r.statusCode + ')');
+                    console.error(out);
+                    process.exit(1);
+                  }
+                });
+              });
+              put.write(body);
+              put.end();
+            });
+          });
+          req.end();
+        "
