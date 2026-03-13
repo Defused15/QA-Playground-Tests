@@ -111,12 +111,12 @@ const dashboardData = {
 //   /* __PLAYWRIGHT_DATA__ */
 // inside the <script> block where const DATA = ... lives.
 
-const PLACEHOLDER = '/* __PLAYWRIGHT_DATA__ */';
+const PLACEHOLDER = '/* __PLAYWRIGHT_DATA__ */null';
 
 if (!tmpl.includes(PLACEHOLDER)) {
   console.error(`❌  Template is missing the injection point: ${PLACEHOLDER}`);
   console.error('    Add it inside your <script> block like:');
-  console.error('      const DATA = /* __PLAYWRIGHT_DATA__ */;');
+  console.error('      const DATA = /* __PLAYWRIGHT_DATA__ */null;');
   process.exit(1);
 }
 
