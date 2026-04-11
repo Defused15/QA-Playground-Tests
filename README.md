@@ -113,6 +113,12 @@ The pipeline:
 
 See the full workflow: [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)
 
+### QA Test Hub Integration
+
+This repository is integrated with the **[QA Test Hub](https://qa.rcastillo.dev)**. After each CI run, the `playwright-report-hub` custom action:
+1. Pushes the JSON report to the `test-hub` repository.
+2. Sends a `repository_dispatch` event to trigger an automatic rebuild of the global dashboard.
+
 ---
 
 ## Stack

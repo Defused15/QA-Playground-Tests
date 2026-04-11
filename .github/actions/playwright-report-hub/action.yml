@@ -97,3 +97,10 @@ runs:
           });
           req.end();
         "
+
+        # Force the Test Hub repo to rebuild its dashboard immediately
+        echo "🚀 Triggering build in $HUB_REPO..."
+        GH_TOKEN=$HUB_TOKEN gh api repos/$HUB_REPO/dispatches \
+          --method POST \
+          -f event_type="test-hub-trigger" \
+          -f client_payload[project]=$PROJECT_NAME
