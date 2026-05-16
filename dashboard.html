@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playwright · Test Report</title>
+<meta name="description" content="Playwright test results report">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style"
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap"
+  onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400&display=swap">
+</noscript>
+<style>
+/* ── Font fallbacks ──────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "DM Sans Fallback";
+  src: local("Arial");
+  size-adjust: 100%; ascent-override: 94%; descent-override: 24%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "DM Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 105%; ascent-override: 88%; descent-override: 22%; line-gap-override: 0%;
+}
+
+/* ── Design tokens ───────────────────────────────────────────────────────────── */
+:root {
+  --paper:    #faf9f7;
+  --paper2:   #f4f2ee;
+  --paper3:   #ede9e3;
+  --ink:      #1a1814;
+  --ink2:     #4a4640;
+  --ink3:     #6b6560;   /* ≥4.5:1 on white — WCAG AA */
+  --ink4:     #5a5450;   /* ≥4.5:1 on white — WCAG AA */
+  --line:     #e4dfd7;
+  --line2:    #d8d1c7;
+  --pass:     #2d6a3f;
+  --pass-bg:  #edf5f0;
+  --fail:     #8b2020;
+  --fail-bg:  #fdf0f0;
+  --flaky:    #7a5c10;
+  --flaky-bg: #fdf6e3;
+  --skip:     #5a5450;
+  --skip-bg:  #f2f0ed;
+  --shadow:   0 1px 3px rgba(26,24,20,.06);
+  --shadow2:  0 2px 8px rgba(26,24,20,.09);
+  --focus:    #1a1814;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "DM Sans", "DM Sans Fallback", sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── Skip link (WCAG 2.1 – 2.4.1) ───────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -999px;
+  left: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+/* ── Focus ring ──────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────────── */
+.page { max-width: 1120px; margin: 0 auto; padding: 52px 36px 80px; }
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1.5px solid var(--ink);
+  margin-bottom: 36px;
+  animation: up .5s ease both;
+  will-change: opacity, transform;
+}
+.eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 4px;
+}
+h1 { font-size: 26px; font-weight: 300; letter-spacing: -.02em; }
+h1 strong { font-weight: 600; }
+.header-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.mono {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 11px;
+  color: var(--ink3);
+  font-weight: 300;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.pill.ok   { background: var(--pass-bg); color: var(--pass);  border-color: #b8d9c2; }
+.pill.fail { background: var(--fail-bg); color: var(--fail);  border-color: #e8bbbb; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* ── Section label ───────────────────────────────────────────────────────────── */
+.sl {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin: 36px 0 14px;
+}
+
+/* ── Stats row ───────────────────────────────────────────────────────────────── */
+.gstats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1px solid var(--line2);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow);
+  animation: up .5s .06s ease both;
+  will-change: opacity, transform;
+}
+.gc { padding: 20px 18px; border-right: 1px solid var(--line); }
+.gc:last-child { border-right: none; }
+.gn {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.gc.p  .gn { color: var(--pass); }
+.gc.f  .gn { color: var(--fail); }
+.gc.fl .gn { color: var(--flaky); }
+.gc.dur .gn { font-size: 20px; }
+.gl {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+}
+
+/* ── Insights ────────────────────────────────────────────────────────────────── */
+.insights-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  animation: up .5s .1s ease both;
+  will-change: opacity, transform;
+}
+.insight-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  transition: border-color .2s, box-shadow .2s;
+  min-width: 0;
+}
+.insight-card:hover { border-color: var(--line2); box-shadow: var(--shadow2); }
+.insight-label {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  margin-bottom: 6px;
+}
+.insight-value {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.insight-sub {
+  font-size: 11px;
+  color: var(--ink3);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Browser chips ───────────────────────────────────────────────────────────── */
+.bchip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  background: var(--paper2);
+  color: var(--ink2);
+  border: 1px solid var(--line);
+}
+.bdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Status chips ────────────────────────────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.chip.pass  { background: var(--pass-bg);  color: var(--pass);  border-color: #c6dece; }
+.chip.fail  { background: var(--fail-bg);  color: var(--fail);  border-color: #e8c4c4; }
+.chip.flaky { background: var(--flaky-bg); color: var(--flaky); border-color: #e5d9a8; }
+.chip.skip  { background: var(--skip-bg);  color: var(--skip);  border-color: #d8d5d0; }
+
+/* ── Filter buttons ──────────────────────────────────────────────────────────── */
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+.filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.fbtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid var(--line2);
+  background: #fff;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all .15s;
+}
+.fbtn:hover { border-color: var(--ink4); color: var(--ink2); }
+.fbtn.active { border-color: transparent; color: #fff; }
+.fbtn.active.all   { background: var(--ink);   border-color: var(--ink); }
+.fbtn.active.pass  { background: var(--pass);  border-color: var(--pass); }
+.fbtn.active.fail  { background: var(--fail);  border-color: var(--fail); }
+.fbtn.active.flaky { background: var(--flaky); border-color: var(--flaky); }
+.fbtn.active.skip  { background: var(--skip);  border-color: var(--skip); }
+.fcount {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 10px;
+  color: var(--ink4);
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────────── */
+.table-wrap {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: up .5s .15s ease both;
+  will-change: opacity, transform;
+}
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+thead { background: var(--paper2); border-bottom: 1px solid var(--line2); }
+th {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink4);
+  text-align: left;
+  padding: 10px 16px;
+  white-space: nowrap;
+  user-select: none;
+}
+th.sortable { cursor: pointer; }
+th.sortable:hover { color: var(--ink2); }
+th.sort-asc::after  { content: " ↑"; }
+th.sort-desc::after { content: " ↓"; }
+td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--paper); }
+tr.hidden { display: none; }
+.tt { font-size: 12.5px; font-weight: 500; color: var(--ink); }
+.tf {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 10px;
+  color: var(--ink4);
+  margin-top: 2px;
+}
+.te {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 10px;
+  color: var(--fail);
+  margin-top: 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 420px;
+}
+.dur {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 11px;
+  color: var(--ink2);
+  white-space: nowrap;
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line);
+}
+.pagination-pages { display: flex; align-items: center; gap: 4px; }
+.pbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 11px;
+  border: 1px solid var(--line2);
+  background: #fff;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.pbtn:hover:not(:disabled) { border-color: var(--ink4); color: var(--ink); }
+.pbtn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.pbtn:disabled { opacity: .35; cursor: default; }
+.pellipsis {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 11px;
+  color: var(--ink4);
+  padding: 0 4px;
+}
+.page-size-wrap { display: flex; align-items: center; gap: 6px; }
+.page-size-select {
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+  font-size: 11px;
+  color: var(--ink2);
+  background: #fff;
+  border: 1px solid var(--line2);
+  border-radius: 4px;
+  padding: 3px 6px;
+  cursor: pointer;
+  outline: none;
+}
+.page-size-select:hover { border-color: var(--ink4); }
+
+/* ── Breakdown panels ────────────────────────────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  animation: up .5s .13s ease both;
+  will-change: opacity, transform;
+}
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px 24px 20px;
+  box-shadow: var(--shadow);
+}
+.panel-title {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+/* Donut */
+.donut-layout { display: flex; align-items: center; gap: 28px; }
+.donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.legend-row   { display: flex; align-items: center; gap: 9px; font-size: 13px; }
+.legend-swatch { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.legend-name  { color: var(--ink2); flex: 1; }
+.legend-count { font-family: "DM Mono","DM Mono Fallback",monospace; font-size: 12px; color: var(--ink3); }
+/* Browser bars */
+.browser-rows { display: flex; flex-direction: column; gap: 16px; }
+.browser-top  { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.browser-name { font-size: 13px; font-weight: 500; color: var(--ink2); display: flex; align-items: center; gap: 7px; }
+.browser-swatch { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.browser-info { font-family: "DM Mono","DM Mono Fallback",monospace; font-size: 11px; color: var(--ink3); }
+.bar-track { height: 4px; background: var(--paper3); border-radius: 2px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 2px; }
+
+/* ── Footer ──────────────────────────────────────────────────────────────────── */
+.footer {
+  margin-top: 52px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+}
+.ft {
+  font-size: 10px;
+  color: var(--ink4);
+  font-family: "DM Mono", "DM Mono Fallback", monospace;
+}
+
+/* ── Animation ───────────────────────────────────────────────────────────────── */
+@keyframes up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .insights-row { grid-template-columns: repeat(3, 1fr); }
+  .gstats { grid-template-columns: repeat(3, 1fr); overflow-x: auto; }
+}
+@media (max-width: 720px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .page { padding: 32px 18px 60px; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .header-meta { align-items: flex-start; }
+  .insights-row { grid-template-columns: repeat(2, 1fr); }
+  .gstats { grid-template-columns: repeat(3, minmax(80px, 1fr)); }
+}
+@media (max-width: 400px) {
+  .insights-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<main class="page" id="main-content">
+
+  <header class="header">
+    <div>
+      <div class="eyebrow">Playwright · Test Report</div>
+      <h1 id="h1-title"><strong>Test Suite</strong></h1>
+    </div>
+    <div class="header-meta">
+      <span class="mono" id="run-date" aria-label="Run date">—</span>
+      <span class="mono" id="run-duration">—</span>
+      <span class="pill ok" id="status-pill" role="status">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="status-text">All passed</span>
+      </span>
+    </div>
+  </header>
+
+  <div class="sl" aria-label="Section: Summary">Summary</div>
+  <div class="gstats" id="gstats" role="region" aria-label="Test result counts"></div>
+
+  <div class="sl" aria-label="Section: Insights">Insights</div>
+  <div class="insights-row" id="insights-row" role="region" aria-label="Test run insights"></div>
+
+  <div class="sl" aria-label="Section: Breakdown">Breakdown</div>
+  <div class="two-col" role="region" aria-label="Test breakdown">
+    <div class="panel">
+      <div class="panel-title" id="donut-title">Result Distribution</div>
+      <div class="donut-layout" aria-labelledby="donut-title">
+        <svg id="donut" width="120" height="120" viewBox="0 0 120 120"
+             role="img" aria-label="Donut chart of test results" style="flex-shrink:0"></svg>
+        <div class="donut-legend" id="donut-legend" role="list"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title" id="browser-title">Browser Performance</div>
+      <div class="browser-rows" id="browser-rows" role="list" aria-labelledby="browser-title"></div>
+    </div>
+  </div>
+
+  <div class="sl" aria-label="Section: Test Results">Test Results</div>
+  <div class="table-wrap">
+    <div class="table-controls">
+      <div class="filter-btns" id="filter-btns" role="group" aria-label="Filter tests by status">
+        <button class="fbtn active all" data-filter="all">All</button>
+        <button class="fbtn pass"  data-filter="expected">Passed</button>
+        <button class="fbtn fail"  data-filter="unexpected">Failed</button>
+        <button class="fbtn flaky" data-filter="flaky">Flaky</button>
+        <button class="fbtn skip"  data-filter="skipped">Skipped</button>
+      </div>
+      <span class="fcount" id="fcount" aria-live="polite" aria-atomic="true"></span>
+    </div>
+    <div class="table-scroll">
+      <table aria-label="Test results">
+        <thead>
+          <tr>
+            <th scope="col" class="sortable" data-col="test">Test</th>
+            <th scope="col" class="sortable" data-col="browser">Browser</th>
+            <th scope="col" class="sortable" data-col="status">Status</th>
+            <th scope="col" class="sortable" data-col="duration">Duration</th>
+            <th scope="col" class="sortable" data-col="retries">Retries</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" role="navigation" aria-label="Table pagination">
+      <span class="fcount" id="fcount2"></span>
+      <div class="pagination-pages" id="pagination-pages"></div>
+      <div class="page-size-wrap">
+        <label class="fcount" for="page-size">Rows</label>
+        <select id="page-size" class="page-size-select">
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="ft" id="footer-left">—</span>
+    <span class="ft">playwright report</span>
+  </footer>
+
+</main>
+
+<script>
+const DATA = {
+  "startTime": 1778919355241,
+  "duration": 121011.052,
+  "workers": 1,
+  "stats": {
+    "total": 66,
+    "expected": 66,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "ok": true
+  },
+  "projectNames": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "tests": [
+    {
+      "title": "Fetch Data",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 27,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1412,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Titles",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 39,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1246,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Bodies",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 49,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1227,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Fetch Data",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 27,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 2083,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Titles",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 39,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1641,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Bodies",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 49,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1613,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Fetch Data",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 27,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1609,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Titles",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 39,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1666,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Check Card Bodies",
+      "path": [
+        "api.spec.ts",
+        "API Test"
+      ],
+      "file": "api.spec.ts",
+      "line": 49,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1689,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "navigation buttons display",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 21,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 829,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Home button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 25,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 773,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "About button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 29,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 968,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Blog button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 33,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 963,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Porfolio button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 37,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 954,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Contact button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 41,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 976,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "navigation buttons display",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 21,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 870,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Home button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 25,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 916,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "About button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 29,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1209,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Blog button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 33,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1225,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Porfolio button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 37,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1315,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Contact button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 41,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1425,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "navigation buttons display",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 21,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 886,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Home button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 25,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 987,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "About button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 29,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1169,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Blog button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 33,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1140,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Porfolio button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 37,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1128,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Contact button",
+      "path": [
+        "menu.spec.ts"
+      ],
+      "file": "menu.spec.ts",
+      "line": 41,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1146,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Generate QR Code",
+      "path": [
+        "qr.spec.ts",
+        "QR Code Generator Tests"
+      ],
+      "file": "qr.spec.ts",
+      "line": 18,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1958,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Generate QR Code",
+      "path": [
+        "qr.spec.ts",
+        "QR Code Generator Tests"
+      ],
+      "file": "qr.spec.ts",
+      "line": 18,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1970,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Generate QR Code",
+      "path": [
+        "qr.spec.ts",
+        "QR Code Generator Tests"
+      ],
+      "file": "qr.spec.ts",
+      "line": 18,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 2402,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar minimum value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 21,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 899,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 32,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 727,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar minimum value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 21,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 905,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 32,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 864,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar minimum value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 21,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 934,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Angry"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 32,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 946,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 47,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1067,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 58,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1083,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 47,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1268,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 58,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1207,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 47,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1235,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Confused"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 58,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1255,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 73,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1095,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 84,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1059,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 73,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1251,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 84,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1251,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 73,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1227,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Happy"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 84,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1204,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 99,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1063,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 113,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1065,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 99,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1233,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 113,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1360,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 99,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1208,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Like"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 113,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1205,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 128,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1101,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 139,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 1050,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 128,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1211,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 139,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 1224,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar min value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 128,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1232,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Range bar max value",
+      "path": [
+        "rangeslider.spec.ts",
+        "Range Kiss"
+      ],
+      "file": "rangeslider.spec.ts",
+      "line": 139,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 1248,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Redirection",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 21,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 6342,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Go Back button",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 27,
+      "project": "chromium",
+      "outcome": "expected",
+      "duration": 7049,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Redirection",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 21,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 8350,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Go Back button",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 27,
+      "project": "firefox",
+      "outcome": "expected",
+      "duration": 5448,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Redirection",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 21,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 7321,
+      "retries": 0,
+      "error": null
+    },
+    {
+      "title": "Go Back button",
+      "path": [
+        "redirect.spec.ts"
+      ],
+      "file": "redirect.spec.ts",
+      "line": 27,
+      "project": "webkit",
+      "outcome": "expected",
+      "duration": 8449,
+      "retries": 0,
+      "error": null
+    }
+  ]
+};
+
+const fmtDur  = ms => ms >= 1000 ? (ms/1000).toFixed(2)+'s' : ms+'ms';
+const fmtDate = ts => new Date(ts).toLocaleDateString('en-US',
+  { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const browserColor = { chromium:'#1a56a0', firefox:'#b54800', webkit:'#5c3080' };
+const chipMap      = { expected:'pass', unexpected:'fail', flaky:'flaky', skipped:'skip' };
+const chipLabel    = { expected:'Passed', unexpected:'Failed', flaky:'Flaky', skipped:'Skipped' };
+
+// ── Header ─────────────────────────────────────────────────────────────────────
+const specFiles = [...new Set(DATA.tests.map(t => t.file))];
+document.getElementById('h1-title').innerHTML = '<strong>'+esc(specFiles.join(', '))+'</strong>';
+document.getElementById('run-date').textContent     = fmtDate(DATA.startTime);
+document.getElementById('run-duration').textContent = 'duration ' + fmtDur(DATA.duration);
+document.getElementById('footer-left').textContent  = 'workers: ' + DATA.workers;
+
+if (!DATA.stats.ok) {
+  document.getElementById('status-pill').className = 'pill fail';
+  document.getElementById('status-text').textContent = 'Failures detected';
+}
+
+// ── Stats ──────────────────────────────────────────────────────────────────────
+document.getElementById('gstats').innerHTML = [
+  { cls:'',    label:'Total',    val: DATA.stats.total },
+  { cls:'p',   label:'Passed',   val: DATA.stats.expected },
+  { cls:'f',   label:'Failed',   val: DATA.stats.unexpected },
+  { cls:'fl',  label:'Flaky',    val: DATA.stats.flaky },
+  { cls:'',    label:'Skipped',  val: DATA.stats.skipped },
+  { cls:'dur', label:'Run time', val: fmtDur(DATA.duration) },
+].map(s =>
+  '<div class="gc '+s.cls+'">'
+  + '<div class="gn">'+s.val+'</div>'
+  + '<div class="gl">'+s.label+'</div>'
+  + '</div>'
+).join('');
+
+// ── Insights ───────────────────────────────────────────────────────────────────
+const nonZero  = DATA.tests.filter(t => t.duration > 0);
+const passed   = DATA.tests.filter(t => t.outcome === 'expected' && t.duration > 0);
+const avgDur   = nonZero.length
+  ? Math.round(nonZero.reduce((a,b) => a + b.duration, 0) / nonZero.length)
+  : 0;
+const slowest  = nonZero.length ? nonZero.reduce((a,b) => a.duration > b.duration ? a : b) : null;
+const fastest  = passed.length  ? passed.reduce((a,b)  => a.duration < b.duration ? a : b) : null;
+const pRate    = DATA.stats.total ? ((DATA.stats.expected/DATA.stats.total)*100).toFixed(0)+'%' : '—';
+
+document.getElementById('insights-row').innerHTML = [
+  { label:'Pass Rate',       value: pRate,                              sub: DATA.stats.expected+' / '+DATA.stats.total+' tests' },
+  { label:'Avg Duration',    value: fmtDur(avgDur),                     sub: nonZero.length+' tests measured' },
+  { label:'Slowest Test',    value: slowest ? fmtDur(slowest.duration) : '—', sub: slowest ? slowest.title : 'no data' },
+  { label:'Fastest Passing', value: fastest ? fmtDur(fastest.duration) : '—', sub: fastest ? fastest.title : 'no data' },
+  { label:'Browsers',        value: String(DATA.projectNames.length),   sub: DATA.projectNames.join(', ') || '—' },
+  { label:'Spec Files',      value: String(specFiles.length),           sub: specFiles.join(', ') || '—' },
+].map(c =>
+  '<div class="insight-card">'
+  + '<div class="insight-label">'+esc(c.label)+'</div>'
+  + '<div class="insight-value">'+esc(c.value)+'</div>'
+  + '<div class="insight-sub" title="'+esc(c.sub)+'">'+esc(c.sub)+'</div>'
+  + '</div>'
+).join('');
+
+// ── Donut ──────────────────────────────────────────────────────────────────────
+const donutData = [
+  { label:'Passed',  val: DATA.stats.expected,   color:'#2d6a3f', bg:'#a8d5b5' },
+  { label:'Failed',  val: DATA.stats.unexpected, color:'#8b2020', bg:'#e8b4b4' },
+  { label:'Flaky',   val: DATA.stats.flaky,      color:'#7a5c10', bg:'#e5d9a8' },
+  { label:'Skipped', val: DATA.stats.skipped,    color:'#5a5450', bg:'#cac6c0' },
+].filter(d => d.val > 0);
+
+const tot = donutData.reduce((s,d) => s+d.val, 0) || 1;
+const cx=60, cy=60, R=46, sw=13, C=2*Math.PI*R;
+const svg = document.getElementById('donut');
+svg.innerHTML = '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="#ede9e3" stroke-width="'+sw+'" aria-hidden="true"/>';
+let off = 0;
+donutData.forEach(d => {
+  const len = (d.val/tot)*C;
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r',R);
+  c.setAttribute('fill','none');
+  c.setAttribute('stroke',d.color);
+  c.setAttribute('stroke-width',sw);
+  c.setAttribute('stroke-dasharray',len+' '+(C-len));
+  c.setAttribute('stroke-dashoffset',-(off*C));
+  c.setAttribute('transform','rotate(-90 '+cx+' '+cy+')');
+  c.setAttribute('opacity','0.85');
+  c.setAttribute('aria-hidden','true');
+  svg.appendChild(c);
+  off += d.val/tot;
+});
+const passRate2 = ((DATA.stats.expected/tot)*100).toFixed(0);
+svg.innerHTML += '<text x="'+cx+'" y="'+(cy-5)+'" text-anchor="middle" dominant-baseline="middle"'
+  +' font-family="\'DM Mono\',monospace" font-size="15" fill="#1a1814" aria-hidden="true">'+passRate2+'%</text>'
+  +'<text x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle" dominant-baseline="middle"'
+  +' font-family="\'DM Sans\',sans-serif" font-size="9" fill="#6b6560" letter-spacing=".08em" aria-hidden="true">PASS RATE</text>';
+
+document.getElementById('donut-legend').innerHTML = donutData.map(d =>
+  '<div class="legend-row" role="listitem">'
+  + '<div class="legend-swatch" style="background:'+d.bg+';border:1px solid '+d.color+'44" aria-hidden="true"></div>'
+  + '<span class="legend-name">'+d.label+'</span>'
+  + '<span class="legend-count">'+d.val+'</span>'
+  + '</div>'
+).join('');
+
+// ── Browser bars ───────────────────────────────────────────────────────────────
+const bStats = {};
+DATA.tests.forEach(t => {
+  if (!bStats[t.project]) bStats[t.project] = { total:0, passed:0, dur:0 };
+  bStats[t.project].total++;
+  if (t.outcome === 'expected') bStats[t.project].passed++;
+  bStats[t.project].dur += t.duration;
+});
+const maxB = Math.max(...Object.values(bStats).map(b => b.total), 1);
+document.getElementById('browser-rows').innerHTML = Object.entries(bStats).map(([name, s]) => {
+  const color  = browserColor[name] || '#555';
+  const barPct = ((s.total/maxB)*100).toFixed(0);
+  return '<div role="listitem">'
+    + '<div class="browser-top">'
+    + '<div class="browser-name"><div class="browser-swatch" style="background:'+color+'" aria-hidden="true"></div>'
+    + name.charAt(0).toUpperCase()+name.slice(1)+'</div>'
+    + '<div class="browser-info">'+s.passed+'/'+s.total+' · avg '+fmtDur(Math.round(s.dur/s.total))+'</div>'
+    + '</div>'
+    + '<div class="bar-track" role="progressbar" aria-valuenow="'+barPct+'" aria-valuemin="0" aria-valuemax="100" aria-label="'+name+' test share">'
+    + '<div class="bar-fill" style="width:'+barPct+'%;background:'+color+';opacity:.65"></div>'
+    + '</div>'
+    + '</div>';
+}).join('');
+
+// ── Test table rows ────────────────────────────────────────────────────────────
+document.getElementById('tbody').innerHTML = DATA.tests.map(t => {
+  const bColor = browserColor[t.project] || '#555';
+  const cls    = chipMap[t.outcome]   || 'skip';
+  const lbl    = chipLabel[t.outcome] || t.outcome;
+  const errHtml = t.error
+    ? '<div class="te">'+esc(t.error.slice(0,240))+(t.error.length>240?'…':'')+'</div>'
+    : '';
+  return '<tr data-outcome="'+t.outcome+'" data-test="'+esc(t.title)+'" data-browser="'+esc(t.project)+'" data-status="'+esc(lbl)+'" data-duration="'+t.duration+'" data-retries="'+t.retries+'">'
+    + '<td><div class="tt">'+esc(t.title)+'</div><div class="tf">'+esc(t.file)+':'+t.line+'</div>'+errHtml+'</td>'
+    + '<td><span class="bchip"><span class="bdot" style="background:'+bColor+'" aria-hidden="true"></span>'+esc(t.project)+'</span></td>'
+    + '<td><span class="chip '+cls+'">'+lbl+'</span></td>'
+    + '<td><span class="dur">'+fmtDur(t.duration)+'</span></td>'
+    + '<td><span class="dur">'+t.retries+'</span></td>'
+    + '</tr>';
+}).join('');
+
+// ── Filter / Sort / Paginate ───────────────────────────────────────────────────
+let activeFilter = 'all', sortCol = null, sortDir = 1, currentPage = 1, pageSize = 25;
+
+function getFilteredSorted() {
+  let rows = [...document.querySelectorAll('#tbody tr')];
+  rows = rows.filter(r => activeFilter === 'all' || r.dataset.outcome === activeFilter);
+  if (sortCol) {
+    rows.sort((a, b) => {
+      const av = a.dataset[sortCol] || '', bv = b.dataset[sortCol] || '';
+      if (sortCol === 'duration' || sortCol === 'retries') return (Number(av) - Number(bv)) * sortDir;
+      return av.localeCompare(bv) * sortDir;
+    });
+  }
+  return rows;
+}
+
+function updateTable() {
+  const allRows  = [...document.querySelectorAll('#tbody tr')];
+  const filtered = getFilteredSorted();
+  const total    = filtered.length;
+  const pages    = Math.max(1, Math.ceil(total / pageSize));
+  if (currentPage > pages) currentPage = pages;
+  const start   = (currentPage - 1) * pageSize;
+  const end     = start + pageSize;
+  const pageSet = new Set(filtered.slice(start, end));
+  const tbody   = document.getElementById('tbody');
+  filtered.forEach(r => tbody.appendChild(r));
+  allRows.forEach(r => r.classList.toggle('hidden', !pageSet.has(r)));
+  const from = total === 0 ? 0 : start + 1;
+  const label = total === 0 ? '0 tests' : from+'–'+Math.min(end,total)+' of '+total+' tests';
+  document.getElementById('fcount').textContent  = label;
+  document.getElementById('fcount2').textContent = label;
+
+  const pag = document.getElementById('pagination-pages');
+  if (pages <= 1) { pag.innerHTML = ''; return; }
+  let html = '<button class="pbtn" data-page="'+(currentPage-1)+'" '+(currentPage===1?'disabled':'')+' aria-label="Previous page">‹</button>';
+  const ps = [];
+  if (pages <= 7) { for (let i=1;i<=pages;i++) ps.push(i); }
+  else {
+    ps.push(1);
+    if (currentPage > 3) ps.push('…');
+    for (let i=Math.max(2,currentPage-1);i<=Math.min(pages-1,currentPage+1);i++) ps.push(i);
+    if (currentPage < pages-2) ps.push('…');
+    ps.push(pages);
+  }
+  ps.forEach(p => {
+    if (p==='…') html+='<span class="pellipsis" aria-hidden="true">…</span>';
+    else html+='<button class="pbtn'+(p===currentPage?' active':'')+'" data-page="'+p+'" aria-label="Page '+p+'" '+(p===currentPage?'aria-current="page"':'')+'>'+p+'</button>';
+  });
+  html += '<button class="pbtn" data-page="'+(currentPage+1)+'" '+(currentPage===pages?'disabled':'')+' aria-label="Next page">›</button>';
+  pag.innerHTML = html;
+}
+
+document.getElementById('filter-btns').addEventListener('click', e => {
+  const btn = e.target.closest('.fbtn');
+  if (!btn) return;
+  activeFilter = btn.dataset.filter;
+  document.querySelectorAll('[data-filter]').forEach(b => {
+    b.classList.remove('active');
+    b.removeAttribute('aria-pressed');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+  currentPage = 1;
+  updateTable();
+});
+
+document.getElementById('pagination-pages').addEventListener('click', e => {
+  const btn = e.target.closest('.pbtn');
+  if (!btn || btn.disabled) return;
+  currentPage = Number(btn.dataset.page);
+  updateTable();
+  document.querySelector('.table-wrap').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+document.getElementById('page-size').addEventListener('change', e => {
+  pageSize = Number(e.target.value);
+  currentPage = 1;
+  updateTable();
+});
+
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.setAttribute('tabindex', '0');
+  th.setAttribute('role', 'columnheader');
+  const onSort = () => {
+    const col = th.dataset.col;
+    if (sortCol === col) {
+      sortDir *= -1;
+      th.className = 'sortable sort-'+(sortDir===1?'asc':'desc');
+      th.setAttribute('aria-sort', sortDir===1?'ascending':'descending');
+    } else {
+      document.querySelectorAll('th.sortable').forEach(t => {
+        t.className='sortable';
+        t.removeAttribute('aria-sort');
+      });
+      sortCol = col; sortDir = 1;
+      th.className = 'sortable sort-asc';
+      th.setAttribute('aria-sort', 'ascending');
+    }
+    currentPage = 1;
+    updateTable();
+  };
+  th.addEventListener('click', onSort);
+  th.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); onSort(); } });
+});
+
+updateTable();
+</script>
+</body>
+</html>
