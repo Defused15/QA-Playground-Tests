@@ -1,57 +1,57 @@
-import { expect, test } from "@playwright/test";
-import { BEFOREACH } from "../POM/Hooks/before-each";
-import { AFTEREACH } from "../POM/Hooks/after-each";
-import { API } from "../POM/api";
-import fs from "fs";
-import path, { dirname } from "path";
+import { expect, test } from '@playwright/test';
+import { testSetup } from '../POM/Hooks/before-each';
+import { testTeardown } from '../POM/Hooks/after-each';
+import { API } from '../POM/api';
 
-let api: API; // Declare a variable to hold the API page object
-const dirPath = path.join(__dirname, '..', '__snapshots__', 'api'); // Define the directory path for snapshots
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-// Hook to run before each test
-test.beforeEach(async ({ page }, testInfo) => {
-  await BEFOREACH(page, testInfo); // Perform setup actions
-  await page.goto("/apps/fetch/"); // Navigate to the fetch app
-  api = new API(page); // Initialize the API page object
-});
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 
-// Hook to run after each test
-test.afterEach(async ({ page }, testInfo) => {
-  await AFTEREACH(page, testInfo); // Perform cleanup actions
-});
+let api: API;
+let posts: Post[] = [];
 
-// Group of tests for API functionality
-test.describe("API Test", () => {
-
-  // Test to fetch data from an API and verify it
-  test("Fetch Data", async ({ request, page }) => {
-    const filePath = path.join(dirPath, 'data.json'); // Define the file path for saving data
-    const response = await request.get("https://jsonplaceholder.typicode.com/posts"); // Fetch data from the API
-    expect(response.ok()).toBeTruthy(); // Verify the response is successful
-    const data = await response.json(); // Parse the response JSON
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2)); // Save the data to a file
-    expect(data.length).toBe(100); // Verify the data contains 100 items
-    const count = await api.card.count(); // Count the number of cards on the page
-    expect(count).toBe(100); // Verify the number of cards matches the data length
+test.describe('API Test', () => {
+  // Fetch once — all tests in this describe use the same data
+  test.beforeAll(async ({ request }) => {
+    const response = await request.get(API_URL);
+    expect(response.ok()).toBeTruthy();
+    posts = await response.json();
+    // Guard: if the API returns empty, every loop test would pass vacuously
+    expect(posts.length).toBeGreaterThan(0);
   });
 
-  // Test to verify the titles of the cards
-  test("Check Card Titles", async () => {
-    const json = fs.readFileSync(path.join(dirPath, 'data.json'), 'utf-8'); // Read the saved data file
-    const data = JSON.parse(json); // Parse the JSON data
-    const titles = data.map((item: { title: string }) => item.title); // Extract titles from the data
-    for (let i = 0; i < titles.length; i++) {
-      await expect(api.title.nth(i)).toHaveText(titles[i]); // Verify each card title matches the data
+  test.beforeEach(async ({ page }, testInfo) => {
+    await testSetup(page, testInfo);
+    await page.goto('/apps/fetch/');
+    api = new API(page);
+  });
+
+  test.afterEach(async ({ page }, testInfo) => {
+    await testTeardown(page, testInfo);
+  });
+
+  test('API returns 100 posts', async () => {
+    expect(posts).toHaveLength(100);
+  });
+
+  test('UI renders all cards', async () => {
+    await expect(api.card).toHaveCount(posts.length);
+  });
+
+  test('Card titles match API data', async () => {
+    for (let i = 0; i < posts.length; i++) {
+      await expect(api.title.nth(i)).toHaveText(posts[i].title);
     }
   });
 
-  // Test to verify the bodies of the cards
-  test("Check Card Bodies", async () => {
-    const json = fs.readFileSync(path.join(dirPath, 'data.json'), 'utf-8'); // Read the saved data file
-    const data = JSON.parse(json); // Parse the JSON data
-    const bodies = data.map((item: { body: string }) => item.body); // Extract bodies from the data
-    for (let i = 0; i < bodies.length; i++) {
-      await expect(api.body.nth(i)).toHaveText(bodies[i]); // Verify each card body matches the data
+  test('Card bodies match API data', async () => {
+    for (let i = 0; i < posts.length; i++) {
+      await expect(api.body.nth(i)).toHaveText(posts[i].body);
     }
   });
 });
