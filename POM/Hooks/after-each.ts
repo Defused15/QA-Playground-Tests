@@ -1,15 +1,14 @@
-import { Page, TestInfo } from "@playwright/test";
+import { Page, TestInfo } from '@playwright/test';
 
-// AFTEREACH hook to be run after each test
-export const AFTEREACH = async (page: Page, testinfo: TestInfo) => {
-  // Close the page after the test is done
-  await page.close();
-  // Log the test title and its status
-  const FULLTITLE = testinfo.titlePath.join(" > ");
-  const BROWSER = testinfo.project.name;
-  console.log(`Finished ${FULLTITLE} on ${BROWSER} with status: ${testinfo.status}`);
-  // If the test did not end with the expected status, log the current page URL
-  if (testinfo.status !== testinfo.expectedStatus) {
+export const testTeardown = async (page: Page, testInfo: TestInfo) => {
+  const fullTitle = testInfo.titlePath.join(' > ');
+  const browser = testInfo.project.name;
+
+  if (testInfo.status !== testInfo.expectedStatus) {
     console.log(`Did not run as expected, ended up at ${page.url()}`);
   }
+
+  console.log(
+    `Finished ${fullTitle} on ${browser} with status: ${testInfo.status}`
+  );
 };

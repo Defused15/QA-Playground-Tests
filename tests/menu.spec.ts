@@ -1,43 +1,81 @@
-import { test } from "@playwright/test";
-import { BEFOREACH } from "../POM/Hooks/before-each";
-import { AFTEREACH } from "../POM/Hooks/after-each";
-import { Menu } from "../POM/menu";
+import { test, expect } from '@playwright/test';
+import { testSetup } from '../POM/Hooks/before-each';
+import { testTeardown } from '../POM/Hooks/after-each';
+import { Menu, MENU_URLS } from '../POM/menu';
 
-let menu: Menu; // Declare a variable to hold the Menu page object
+let menu: Menu;
 
-// Hook to run before each test
-test.beforeEach(async ({ page }, testInfo) => {
-  await BEFOREACH(page, testInfo); // Perform setup actions
-  await page.goto("/apps/links/"); // Navigate to the links app
-  menu = new Menu(page); // Initialize the Menu page object
-});
+test.describe('Menu Navigation', () => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    await testSetup(page, testInfo);
+    await page.goto('/apps/links/');
+    menu = new Menu(page);
+  });
 
-// Hook to run after each test
-test.afterEach(async ({ page }, testInfo) => {
-  await AFTEREACH(page, testInfo); // Perform cleanup actions
-});
+  test.afterEach(async ({ page }, testInfo) => {
+    await testTeardown(page, testInfo);
+  });
 
-// Test to verify the display of navigation buttons
-test("navigation buttons display", async () => {
-  await menu.buttonsDisplay(); // Verify that all navigation buttons are displayed correctly
-});
+  test('navigation buttons display', async () => {
+    await menu.buttonsDisplay();
+  });
 
-test("Home button", async () => {
-  await menu.clickHome(); // Click the Home button and verify the URL
-});
+  test('Home button', async ({ page }) => {
+    await menu.clickHome();
+    await expect(page).toHaveURL(MENU_URLS.home);
+  });
 
-test("About button", async () => {
-  await menu.clickAbout(); // Click the About button and verify the URL and welcome message
-});
+  test('About button', async ({ page }) => {
+    await menu.clickAbout();
+    await expect(page).toHaveURL(MENU_URLS.about);
+    await expect(menu.welcomeMessage).toHaveText('Welcome to the About Page');
+  });
 
-test("Blog button", async () => {
-  await menu.clickBlog(); // Click the Blog button and verify the URL and welcome message
-});
+  test('Blog button', async ({ page }) => {
+    await menu.clickBlog();
+    await expect(page).toHaveURL(MENU_URLS.blog);
+    await expect(menu.welcomeMessage).toHaveText('Welcome to the Blog Page');
+  });
 
-test("Porfolio button", async () => {
-  await menu.clickPortfolio(); // Click the Portfolio button and verify the URL and welcome message
-});
+  test('Portfolio button', async ({ page }) => {
+    await menu.clickPortfolio();
+    await expect(page).toHaveURL(MENU_URLS.portfolio);
+    await expect(menu.welcomeMessage).toHaveText(
+      'Welcome to the Portfolio Page'
+    );
+  });
 
-test("Contact button", async () => {
-  await menu.clickContact(); // Click the Contact button and verify the URL and welcome message
+  test('Contact button', async ({ page }) => {
+    await menu.clickContact();
+    await expect(page).toHaveURL(MENU_URLS.contact);
+    await expect(menu.welcomeMessage).toHaveText('Welcome to the Contact Page');
+  });
+
+  test('Go Back button from About returns to home', async ({ page }) => {
+    await menu.clickAbout();
+    await expect(menu.welcomeButton).toBeVisible();
+    await menu.welcomeButton.click();
+    await expect(page).toHaveURL(MENU_URLS.base);
+  });
+
+  test('Go Back button from Blog returns to home', async ({ page }) => {
+    await menu.clickBlog();
+    await expect(menu.welcomeButton).toBeVisible();
+    await menu.welcomeButton.click();
+    await expect(page).toHaveURL(MENU_URLS.base);
+  });
+
+  test('Go Back button from Portfolio returns to home', async ({ page }) => {
+    await menu.clickPortfolio();
+    await expect(menu.welcomeButton).toBeVisible();
+    await menu.welcomeButton.click();
+    await expect(page).toHaveURL(MENU_URLS.base);
+  });
+
+  test('Go Back button from Contact returns to home', async ({ page }) => {
+    await menu.clickContact();
+    await expect(menu.welcomeButton).toBeVisible();
+    await menu.welcomeButton.click();
+    await expect(page).toHaveURL(MENU_URLS.base);
+  });
 });
