@@ -1,0 +1,4637 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/playwright.config.ts",
+    "rootDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/tests",
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/Defused15/QA-Playground-Tests/commit/a2c12dc3c30e7a76c798c66a306ed373028ae798",
+        "commitHash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+        "buildHref": "https://github.com/Defused15/QA-Playground-Tests/actions/runs/40087041427"
+      },
+      "gitCommit": {
+        "shortHash": "a2c12dc",
+        "hash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+        "subject": "feat: add snapshot images for QR code tests in Firefox and WebKit",
+        "body": "feat: add snapshot images for QR code tests in Firefox and WebKit\n\ntest: implement iframe tests for nested iframe functionality\n\nchore: add TypeScript configuration file for project\n",
+        "author": {
+          "name": "Roberto Castillo",
+          "email": "122112151+Defused15@users.noreply.github.com",
+          "time": 1781100661000
+        },
+        "committer": {
+          "name": "Roberto Castillo",
+          "email": "122112151+Defused15@users.noreply.github.com",
+          "time": 1781100661000
+        },
+        "branch": "main"
+      },
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/Defused15/QA-Playground-Tests/commit/a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "commitHash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "buildHref": "https://github.com/Defused15/QA-Playground-Tests/actions/runs/40087041427"
+          },
+          "gitCommit": {
+            "shortHash": "a2c12dc",
+            "hash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "subject": "feat: add snapshot images for QR code tests in Firefox and WebKit",
+            "body": "feat: add snapshot images for QR code tests in Firefox and WebKit\n\ntest: implement iframe tests for nested iframe functionality\n\nchore: add TypeScript configuration file for project\n",
+            "author": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "committer": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "branch": "main"
+          },
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/Defused15/QA-Playground-Tests/commit/a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "commitHash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "buildHref": "https://github.com/Defused15/QA-Playground-Tests/actions/runs/40087041427"
+          },
+          "gitCommit": {
+            "shortHash": "a2c12dc",
+            "hash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "subject": "feat: add snapshot images for QR code tests in Firefox and WebKit",
+            "body": "feat: add snapshot images for QR code tests in Firefox and WebKit\n\ntest: implement iframe tests for nested iframe functionality\n\nchore: add TypeScript configuration file for project\n",
+            "author": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "committer": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "branch": "main"
+          },
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/test-results",
+        "repeatEach": 1,
+        "retries": 2,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/Defused15/QA-Playground-Tests/commit/a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "commitHash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "buildHref": "https://github.com/Defused15/QA-Playground-Tests/actions/runs/40087041427"
+          },
+          "gitCommit": {
+            "shortHash": "a2c12dc",
+            "hash": "a2c12dc3c30e7a76c798c66a306ed373028ae798",
+            "subject": "feat: add snapshot images for QR code tests in Firefox and WebKit",
+            "body": "feat: add snapshot images for QR code tests in Firefox and WebKit\n\ntest: implement iframe tests for nested iframe functionality\n\nchore: add TypeScript configuration file for project\n",
+            "author": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "committer": {
+              "name": "Roberto Castillo",
+              "email": "122112151+Defused15@users.noreply.github.com",
+              "time": 1781100661000
+            },
+            "branch": "main"
+          },
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/home/runner/work/QA-Playground-Tests/QA-Playground-Tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.58.2",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "api.spec.ts",
+      "file": "api.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API Test",
+          "file": "api.spec.ts",
+          "line": 18,
+          "column": 6,
+          "specs": [
+            {
+              "title": "API returns 100 posts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 663,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: API returns 100 posts\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > API returns 100 posts on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:20.600Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-bd7d138e95a58b066daf",
+              "file": "api.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "UI renders all cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 608,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: UI renders all cards\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > UI renders all cards on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:21.608Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-a0e4205ace0a5f7fef04",
+              "file": "api.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "Card titles match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1126,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card titles match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card titles match API data on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:22.233Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-5ff70999b67d37e6460a",
+              "file": "api.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "Card bodies match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1018,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card bodies match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card bodies match API data on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:23.378Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-9af35484c8660a42020e",
+              "file": "api.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "API returns 100 posts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1498,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: API returns 100 posts\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > API returns 100 posts on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:56.607Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-10931ecb0bb6bef4c752",
+              "file": "api.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "UI renders all cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 730,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: UI renders all cards\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > UI renders all cards on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:58.728Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-01125388a04aadd56bbd",
+              "file": "api.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "Card titles match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1475,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card titles match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card titles match API data on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:59.479Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-243ae9761e5bd281376d",
+              "file": "api.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "Card bodies match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1373,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card bodies match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card bodies match API data on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:00.976Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-2e3a426f0a85b41c9169",
+              "file": "api.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "API returns 100 posts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7050,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: API returns 100 posts\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > API returns 100 posts on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:47.677Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-5b209894ab9e42d891f3",
+              "file": "api.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "UI renders all cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 975,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: UI renders all cards\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > UI renders all cards on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:55.329Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-f318cf9b78474a2a0009",
+              "file": "api.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "Card titles match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1765,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card titles match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card titles match API data on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:56.331Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-068bc8baef67211c3ffc",
+              "file": "api.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "Card bodies match API data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1776,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Card bodies match API data\n"
+                        },
+                        {
+                          "text": "Finished api.spec.ts > API Test > Card bodies match API data on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:58.134Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1ea1b1599cbc08f16936-92a42c8a04fa8725bdc1",
+              "file": "api.spec.ts",
+              "line": 52,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "iframe.spec.ts",
+      "file": "iframe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Nested iFrame",
+          "file": "iframe.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Outer iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 676,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Outer iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Outer iframe loads with title on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:24.411Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-4c7d5f978c6556cc0b19",
+              "file": "iframe.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Inner iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 654,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Inner iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Inner iframe loads with title on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:25.100Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-2479cd72fcf8a06ca2a6",
+              "file": "iframe.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "Click Me link is visible in inner iframe",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 658,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me link is visible in inner iframe\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me link is visible in inner iframe on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:25.767Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-30d1cf4e4f6fa017f692",
+              "file": "iframe.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Clicked message hidden before interaction",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 576,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Clicked message hidden before interaction\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Clicked message hidden before interaction on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:26.439Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-d9e02c709080f77a9c59",
+              "file": "iframe.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "Click Me shows confirmation message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 772,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me shows confirmation message\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me shows confirmation message on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:27.028Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-5b8fb3d1af510343c4a3",
+              "file": "iframe.spec.ts",
+              "line": 36,
+              "column": 7
+            },
+            {
+              "title": "Outer iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 749,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Outer iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Outer iframe loads with title on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:02.364Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-663194acfdd102e15091",
+              "file": "iframe.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Inner iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 729,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Inner iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Inner iframe loads with title on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:03.125Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-7ad1af04deddadc9fbc5",
+              "file": "iframe.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "Click Me link is visible in inner iframe",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 754,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me link is visible in inner iframe\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me link is visible in inner iframe on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:03.865Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-efb7c3843253df2b68a5",
+              "file": "iframe.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Clicked message hidden before interaction",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 741,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Clicked message hidden before interaction\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Clicked message hidden before interaction on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:04.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-6b3f61453c5674bd5bb0",
+              "file": "iframe.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "Click Me shows confirmation message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1120,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me shows confirmation message\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me shows confirmation message on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:05.385Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-ac305c704a84076cc78c",
+              "file": "iframe.spec.ts",
+              "line": 36,
+              "column": 7
+            },
+            {
+              "title": "Outer iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1043,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Outer iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Outer iframe loads with title on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:59.935Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-3479f7eda7e0c59807d6",
+              "file": "iframe.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Inner iframe loads with title",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 995,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Inner iframe loads with title\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Inner iframe loads with title on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:00.999Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-400821494757346dfd6c",
+              "file": "iframe.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "Click Me link is visible in inner iframe",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1029,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me link is visible in inner iframe\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me link is visible in inner iframe on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:02.010Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-6376f389785c1dc536a3",
+              "file": "iframe.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Clicked message hidden before interaction",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1052,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Clicked message hidden before interaction\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Clicked message hidden before interaction on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:03.051Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-26767fae93f6972772a5",
+              "file": "iframe.spec.ts",
+              "line": 32,
+              "column": 7
+            },
+            {
+              "title": "Click Me shows confirmation message",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1113,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Click Me shows confirmation message\n"
+                        },
+                        {
+                          "text": "Finished iframe.spec.ts > Nested iFrame > Click Me shows confirmation message on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:04.118Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00c842d2a0f464768682-2ef90eba488bc104be35",
+              "file": "iframe.spec.ts",
+              "line": 36,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "menu.spec.ts",
+      "file": "menu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Menu Navigation",
+          "file": "menu.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "navigation buttons display",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 441,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: navigation buttons display\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > navigation buttons display on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:27.815Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-70ddfb633db40a663db5",
+              "file": "menu.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Home button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 431,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Home button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Home button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:28.268Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-e5ea41ad50c844237a6d",
+              "file": "menu.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "About button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 657,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: About button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > About button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:28.711Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-2e3380a1212f186178a6",
+              "file": "menu.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Blog button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 572,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Blog button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Blog button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:29.380Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-f37a52535c26049f81c8",
+              "file": "menu.spec.ts",
+              "line": 34,
+              "column": 7
+            },
+            {
+              "title": "Portfolio button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 527,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Portfolio button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Portfolio button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:29.964Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-16133313b3c78005b894",
+              "file": "menu.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "Contact button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 586,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Contact button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Contact button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:30.502Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-542a5f971b150cd088ff",
+              "file": "menu.spec.ts",
+              "line": 48,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from About returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 704,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from About returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from About returns to home on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:31.101Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-8088c72e22ca59c0ce84",
+              "file": "menu.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Blog returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1038,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Blog returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Blog returns to home on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:31.833Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-b5167de65045b6ea433e",
+              "file": "menu.spec.ts",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Portfolio returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 813,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Portfolio returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Portfolio returns to home on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:32.883Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-5a9ce70a0e56ebdf0416",
+              "file": "menu.spec.ts",
+              "line": 68,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Contact returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 668,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Contact returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Contact returns to home on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:33.707Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-3c55298dc3293ec4ce37",
+              "file": "menu.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "navigation buttons display",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 595,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: navigation buttons display\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > navigation buttons display on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:06.519Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-8ad595684f76e6dc3479",
+              "file": "menu.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Home button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 615,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Home button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Home button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:07.137Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-0c260bb8bb37ae3328fe",
+              "file": "menu.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "About button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 921,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: About button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > About button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:07.768Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-015e61bc3016ad6f7d74",
+              "file": "menu.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Blog button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 782,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Blog button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Blog button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:08.716Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-74f25f7a4e7be6f8ce5e",
+              "file": "menu.spec.ts",
+              "line": 34,
+              "column": 7
+            },
+            {
+              "title": "Portfolio button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 763,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Portfolio button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Portfolio button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:09.510Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-c31a27ee1439417b2f20",
+              "file": "menu.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "Contact button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 791,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Contact button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Contact button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:10.286Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-ef989765655a6545a82a",
+              "file": "menu.spec.ts",
+              "line": 48,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from About returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1100,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from About returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from About returns to home on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:11.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-1476999f12e23157d9f7",
+              "file": "menu.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Blog returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1395,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Blog returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Blog returns to home on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:12.201Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-307084a56479a75a5a57",
+              "file": "menu.spec.ts",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Portfolio returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 980,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Portfolio returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Portfolio returns to home on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:13.608Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-0bdbd78cb6d03a9aa2e2",
+              "file": "menu.spec.ts",
+              "line": 68,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Contact returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1131,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Contact returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Contact returns to home on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:14.601Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-42857d12046618e86b11",
+              "file": "menu.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "navigation buttons display",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 983,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: navigation buttons display\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > navigation buttons display on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:05.252Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-d3c95116f54b32d5aced",
+              "file": "menu.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Home button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1787,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Home button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Home button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:06.255Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-e0958f89a974a87b757e",
+              "file": "menu.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "About button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1177,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: About button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > About button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:08.059Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-3d910a42f06f4647a04d",
+              "file": "menu.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "Blog button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1182,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Blog button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Blog button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:09.251Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-12a478e35cecbbcc3720",
+              "file": "menu.spec.ts",
+              "line": 34,
+              "column": 7
+            },
+            {
+              "title": "Portfolio button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1113,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Portfolio button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Portfolio button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:10.445Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-391fa00fa83a7551ffd5",
+              "file": "menu.spec.ts",
+              "line": 40,
+              "column": 7
+            },
+            {
+              "title": "Contact button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1098,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Contact button\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Contact button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:11.573Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-4529cc1d5e083a3cc2dc",
+              "file": "menu.spec.ts",
+              "line": 48,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from About returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1463,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from About returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from About returns to home on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:12.682Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-197a66bf04ccaedca09f",
+              "file": "menu.spec.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Blog returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1315,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Blog returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Blog returns to home on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:14.159Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-259aa0d6e1aa3b5927eb",
+              "file": "menu.spec.ts",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Portfolio returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1375,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Portfolio returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Portfolio returns to home on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:15.485Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-3e5426d923194085cf51",
+              "file": "menu.spec.ts",
+              "line": 68,
+              "column": 7
+            },
+            {
+              "title": "Go Back button from Contact returns to home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1329,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button from Contact returns to home\n"
+                        },
+                        {
+                          "text": "Finished menu.spec.ts > Menu Navigation > Go Back button from Contact returns to home on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:16.872Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "73ebff718611fd089a03-548dd34835d9f3336be5",
+              "file": "menu.spec.ts",
+              "line": 75,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "qr.spec.ts",
+      "file": "qr.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "QR Code Generator",
+          "file": "qr.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Generate QR Code",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1396,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:34.388Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-d4af255cceb6150959d5",
+              "file": "qr.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Generate QR Code with empty input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 427,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code with empty input\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code with empty input on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:35.798Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-d0441dab8fa62d23de13",
+              "file": "qr.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "Generate QR Code",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1599,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:15.746Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-ed71e44aa361a650b5c7",
+              "file": "qr.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Generate QR Code with empty input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 549,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code with empty input\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code with empty input on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:17.356Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-f773107c14ce7f5f3bd1",
+              "file": "qr.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "Generate QR Code",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2009,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:18.214Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-5b3b85a8c696d0d76f6d",
+              "file": "qr.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Generate QR Code with empty input",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1060,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Generate QR Code with empty input\n"
+                        },
+                        {
+                          "text": "Finished qr.spec.ts > QR Code Generator > Generate QR Code with empty input on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:20.238Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da0fbe4cac1ecbad45e3-e35f366614fcf199c0ca",
+              "file": "qr.spec.ts",
+              "line": 27,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "rangeslider.spec.ts",
+      "file": "rangeslider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Range Slider",
+          "file": "rangeslider.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Default slider state on page load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 438,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Default slider state on page load\n"
+                        },
+                        {
+                          "text": "Finished rangeslider.spec.ts > Range Slider > Default slider state on page load on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:36.240Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3d9e04da413e20a44345-13edc1ff8bcef77a2e93",
+              "file": "rangeslider.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Default slider state on page load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 592,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Default slider state on page load\n"
+                        },
+                        {
+                          "text": "Finished rangeslider.spec.ts > Range Slider > Default slider state on page load on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:17.919Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3d9e04da413e20a44345-99c4c7029e2416eddbca",
+              "file": "rangeslider.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Default slider state on page load",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 912,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Default slider state on page load\n"
+                        },
+                        {
+                          "text": "Finished rangeslider.spec.ts > Range Slider > Default slider state on page load on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:21.311Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3d9e04da413e20a44345-9f1f419fce4cab3964c3",
+              "file": "rangeslider.spec.ts",
+              "line": 19,
+              "column": 7
+            }
+          ],
+          "suites": [
+            {
+              "title": "Range Angry",
+              "file": "rangeslider.spec.ts",
+              "line": 26,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Range bar minimum value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 442,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar minimum value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar minimum value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:36.689Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-3613fc5d97166720d98f",
+                  "file": "rangeslider.spec.ts",
+                  "line": 27,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 824,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar max value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:37.142Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-9cf3aba9bad5845f5b42",
+                  "file": "rangeslider.spec.ts",
+                  "line": 39,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar minimum value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 602,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar minimum value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar minimum value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:18.522Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-b3942c7c4c8d8d184662",
+                  "file": "rangeslider.spec.ts",
+                  "line": 27,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 749,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar max value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:19.136Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-e94e2bbf6e4279e0a902",
+                  "file": "rangeslider.spec.ts",
+                  "line": 39,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar minimum value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 918,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar minimum value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar minimum value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:22.238Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-36dae320f2ec16026eee",
+                  "file": "rangeslider.spec.ts",
+                  "line": 27,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 874,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Angry > Range bar max value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:23.172Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-64ecf29327c19ec4d5ce",
+                  "file": "rangeslider.spec.ts",
+                  "line": 39,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Range Confused",
+              "file": "rangeslider.spec.ts",
+              "line": 53,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 849,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar min value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:37.977Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-873876e3de476874366e",
+                  "file": "rangeslider.spec.ts",
+                  "line": 54,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 743,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar max value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:38.838Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-4ac1f17d8746e0ceeca4",
+                  "file": "rangeslider.spec.ts",
+                  "line": 66,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 944,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar min value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:19.896Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-6381de198935cff18e3c",
+                  "file": "rangeslider.spec.ts",
+                  "line": 54,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 910,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar max value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:20.850Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-d6dee775ac5f4aac5a1b",
+                  "file": "rangeslider.spec.ts",
+                  "line": 66,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1233,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar min value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:24.060Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-3da98e8b5dcc4ee330ee",
+                  "file": "rangeslider.spec.ts",
+                  "line": 54,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1221,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Confused > Range bar max value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:25.307Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-d196c69667354980b626",
+                  "file": "rangeslider.spec.ts",
+                  "line": 66,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Range Happy",
+              "file": "rangeslider.spec.ts",
+              "line": 80,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 762,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar min value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:39.592Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-006775e49dfdc066b717",
+                  "file": "rangeslider.spec.ts",
+                  "line": 81,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 772,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar max value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:40.367Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-e0bc0a41a46e893b1fa4",
+                  "file": "rangeslider.spec.ts",
+                  "line": 93,
+                  "column": 9
+                },
+                {
+                  "title": "Send Feedback click hides button and shows confirmation",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 498,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Send Feedback click hides button and shows confirmation\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Send Feedback click hides button and shows confirmation on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:41.150Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-da9060eec9c6d5c0ec6b",
+                  "file": "rangeslider.spec.ts",
+                  "line": 105,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 921,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar min value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:21.773Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-f6d04bad766e56e4c6b4",
+                  "file": "rangeslider.spec.ts",
+                  "line": 81,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 898,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar max value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:22.706Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-35a2a535a8da57be3f01",
+                  "file": "rangeslider.spec.ts",
+                  "line": 93,
+                  "column": 9
+                },
+                {
+                  "title": "Send Feedback click hides button and shows confirmation",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 830,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Send Feedback click hides button and shows confirmation\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Send Feedback click hides button and shows confirmation on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:23.616Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-87e123cff5312bed0235",
+                  "file": "rangeslider.spec.ts",
+                  "line": 105,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1252,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar min value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:26.539Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-ef4deb5dae457786fd51",
+                  "file": "rangeslider.spec.ts",
+                  "line": 81,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1224,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Range bar max value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:27.801Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-357de3a9d4432ba38ad0",
+                  "file": "rangeslider.spec.ts",
+                  "line": 93,
+                  "column": 9
+                },
+                {
+                  "title": "Send Feedback click hides button and shows confirmation",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1168,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Send Feedback click hides button and shows confirmation\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Happy > Send Feedback click hides button and shows confirmation on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:29.038Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-764f0517b5f15b183ecc",
+                  "file": "rangeslider.spec.ts",
+                  "line": 105,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Range Like",
+              "file": "rangeslider.spec.ts",
+              "line": 114,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 753,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar min value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:41.658Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-a1ca4ae1b4662dda9bd3",
+                  "file": "rangeslider.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 776,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar max value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:42.422Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-f7e93a67bd60b69419d1",
+                  "file": "rangeslider.spec.ts",
+                  "line": 128,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 887,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar min value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:24.457Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-7bf30cd4a683280b0e75",
+                  "file": "rangeslider.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 959,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar max value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:25.356Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-7a999579988a9dc47f80",
+                  "file": "rangeslider.spec.ts",
+                  "line": 128,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1219,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar min value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:30.218Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-6af21508b0628a312707",
+                  "file": "rangeslider.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1235,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Like > Range bar max value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:31.451Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-ab627e9c248bb37b4c11",
+                  "file": "rangeslider.spec.ts",
+                  "line": 128,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Range Kiss",
+              "file": "rangeslider.spec.ts",
+              "line": 143,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 869,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar min value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:43.212Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-1ab39f8159e0ac914de6",
+                  "file": "rangeslider.spec.ts",
+                  "line": 144,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 745,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar max value on chromium with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:44:44.093Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-6801f901804d9cd660bb",
+                  "file": "rangeslider.spec.ts",
+                  "line": 156,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 977,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar min value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:26.325Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-72c1329e49bd9212ee33",
+                  "file": "rangeslider.spec.ts",
+                  "line": 144,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 935,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar max value on firefox with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:45:27.316Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-46ca6235011944935873",
+                  "file": "rangeslider.spec.ts",
+                  "line": 156,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar min value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1211,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar min value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar min value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:32.708Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-a89e4c63fd49681d1568",
+                  "file": "rangeslider.spec.ts",
+                  "line": 144,
+                  "column": 9
+                },
+                {
+                  "title": "Range bar max value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1205,
+                          "errors": [],
+                          "stdout": [
+                            {
+                              "text": "Running test: Range bar max value\n"
+                            },
+                            {
+                              "text": "Finished rangeslider.spec.ts > Range Slider > Range Kiss > Range bar max value on webkit with status: passed\n"
+                            }
+                          ],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-10-24T10:46:33.931Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "3d9e04da413e20a44345-362542e344a964e01b03",
+                  "file": "rangeslider.spec.ts",
+                  "line": 156,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "redirect.spec.ts",
+      "file": "redirect.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Redirect",
+          "file": "redirect.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Redirection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6752,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Redirection\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Redirection on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:44.849Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-c1cfb00e04e29ac33e7f",
+              "file": "redirect.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Go Back button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3970,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Go Back button on chromium with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:44:51.612Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-c07e224a762e5b340b8f",
+              "file": "redirect.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "Redirection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10801,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Redirection\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Redirection on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:28.264Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-89852bc5518a8c9cb768",
+              "file": "redirect.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Go Back button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6958,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Go Back button on firefox with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:45:39.081Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-8b870afe2aa7a0e929f2",
+              "file": "redirect.spec.ts",
+              "line": 24,
+              "column": 7
+            },
+            {
+              "title": "Redirection",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8422,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Redirection\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Redirection on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:35.153Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-387e9068bb72e55945ae",
+              "file": "redirect.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "Go Back button",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7687,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Running test: Go Back button\n"
+                        },
+                        {
+                          "text": "Finished redirect.spec.ts > Redirect > Go Back button on webkit with status: passed\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-24T10:46:43.586Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "923dfd799a6064345760-42880a2902e2709eb01b",
+              "file": "redirect.spec.ts",
+              "line": 24,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-24T10:44:19.369Z",
+    "duration": 151950.12,
+    "expected": 105,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
