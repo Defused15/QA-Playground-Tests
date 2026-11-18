@@ -1,0 +1,24 @@
+# Keeps the SHA-pinned actions and the dev dependencies current with one
+# grouped pull request per ecosystem each month.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      dev-dependencies:
+        patterns: ['*']
+        update-types: [minor, patch]
+    ignore:
+      # ESLint 9+ needs flat config, which eslint-config-google doesn't support.
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
