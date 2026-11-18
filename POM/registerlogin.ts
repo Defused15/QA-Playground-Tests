@@ -31,8 +31,6 @@ export const VALID_USER: User = {
 };
 
 export class RegisterLogin {
-  readonly page: Page;
-
   // The three views are plain <div> cards with no role/name, so they are
   // scoped by id; everything inside uses accessible locators.
   readonly registerView: Locator;
@@ -61,7 +59,6 @@ export class RegisterLogin {
   readonly loginAlert: Locator;
   readonly loginEmailInput: Locator;
   readonly loginPasswordInput: Locator;
-  readonly loginPasswordToggle: Locator;
   readonly loginButton: Locator;
   readonly goToRegisterLink: Locator;
   readonly loginEmailError: Locator;
@@ -72,8 +69,6 @@ export class RegisterLogin {
   readonly logoutButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
-
     this.registerView = page.locator('#register-view');
     this.loginView = page.locator('#login-view');
     this.dashboardView = page.locator('#dashboard-view');
@@ -122,9 +117,6 @@ export class RegisterLogin {
     });
     this.loginPasswordInput = this.loginView.getByRole('textbox', {
       name: 'Password',
-    });
-    this.loginPasswordToggle = this.loginView.getByRole('button', {
-      name: /Show|Hide/,
     });
     this.loginButton = this.loginView.getByRole('button', { name: 'Log In' });
     this.goToRegisterLink = this.loginView.getByRole('link', {

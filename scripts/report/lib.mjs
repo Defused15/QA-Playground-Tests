@@ -38,7 +38,7 @@ const clip = (s) => {
 };
 
 /** First meaningful line of an error message. */
-export const firstLine = (s) =>
+const firstLine = (s) =>
   stripAnsi(s)
     .split('\n')
     .map((l) => l.trim())

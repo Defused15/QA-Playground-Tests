@@ -2,14 +2,8 @@ import { Page, Locator } from '@playwright/test';
 
 export const JIRA_STORAGE_KEY = 'qap_board';
 
-export const COLUMNS = {
-  todo: 'To Do',
-  inprogress: 'In Progress',
-  inreview: 'In Review',
-  done: 'Done',
-} as const;
-
-export type ColumnKey = keyof typeof COLUMNS;
+// Column ids used in the app's element ids (e.g. #body-inprogress)
+export type ColumnKey = 'todo' | 'inprogress' | 'inreview' | 'done';
 
 export interface NewIssue {
   title: string;
@@ -30,7 +24,6 @@ export class JiraBoard {
   readonly cards: Locator;
 
   // Create dialog
-  readonly createOverlay: Locator;
   readonly createDialog: Locator;
   readonly titleInput: Locator;
   readonly titleError: Locator;
@@ -73,8 +66,6 @@ export class JiraBoard {
     this.board = page.locator('#board');
     this.cards = page.locator('.issue-card');
 
-    // Overlays are the click-outside targets around each dialog
-    this.createOverlay = page.locator('#create-modal');
     this.createDialog = page.getByRole('dialog', { name: 'Create Issue' });
     this.titleInput = this.createDialog.getByLabel('Title');
     this.titleError = this.createDialog.getByRole('alert');
@@ -93,6 +84,7 @@ export class JiraBoard {
     });
 
     // Detail fields are unlabeled spans, so they are located by id
+    // The overlay is the click-outside target around the dialog
     this.detailOverlay = page.locator('#detail-modal');
     this.detailDialog = this.detailOverlay.getByRole('dialog');
     this.detailId = page.locator('#detail-id');

@@ -13,12 +13,10 @@ export const REVERSE_GEOCODE_URL = '**/nominatim.openstreetmap.org/reverse**';
 export type GeolocationErrorCode = 1 | 2 | 3;
 
 export class Geolocation {
-  readonly page: Page;
   readonly locationInfo: Locator;
   readonly getLocationButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
     // Status text is a plain div with no role or label
     this.locationInfo = page.locator('#location-info');
     this.getLocationButton = page.getByRole('button', { name: 'Get Location' });

@@ -10,7 +10,7 @@ export const HOSTILE_TITLE = '</script><img src=x onerror=alert(1)>';
 export const DOLLAR_TITLE = "Keeps $& and $' and $1 in the label";
 export const HOSTILE_ERROR =
   'Error: expected </script><script>alert(2)</script> to be "$&"';
-export const HOSTILE_ATTACHMENT = '"><img src=x onerror=alert(3)>.png';
+const HOSTILE_ATTACHMENT = '"><img src=x onerror=alert(3)>.png';
 
 const ESC = String.fromCharCode(0x1b);
 const red = (s) => ESC + '[31m' + s + ESC + '[39m';
@@ -38,7 +38,7 @@ const chunk = (type, data) => {
 };
 
 /** A small PNG that looks like a page screenshot (header, text lines, a box). */
-export function screenshotPng(w = 640, h = 400, accent = [192, 38, 47]) {
+function screenshotPng(w = 640, h = 400, accent = [192, 38, 47]) {
   const rows = [];
   for (let y = 0; y < h; y++) {
     const row = Buffer.alloc(1 + w * 3);

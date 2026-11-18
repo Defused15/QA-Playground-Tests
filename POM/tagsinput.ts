@@ -4,7 +4,6 @@ export const DEFAULT_TAGS = ['node', 'javascript'];
 export const MAX_TAGS = 10;
 
 export class TagsInput {
-  readonly page: Page;
   readonly heading: Locator;
   readonly hint: Locator;
   readonly input: Locator;
@@ -13,7 +12,6 @@ export class TagsInput {
   readonly removeAllButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
     const main = page.getByRole('main');
     this.heading = main.getByRole('heading', { name: 'Tags' });
     this.hint = main.getByText('Press enter or add a comma after each tag');
