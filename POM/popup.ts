@@ -35,25 +35,28 @@ export class Popup {
   }
 
   // Submit calls window.close() in its onclick, so the window can close while
-  // the click action is still finishing. Only that closure error is ignored;
-  // awaiting the close event still proves the window actually closed.
-  async submit(popup: Page) {
+  // the action that triggered it is still finishing, which rejects that action.
+  // Only that closure error is ignored; awaiting the close event still proves
+  // the window actually closed.
+  private async untilClosed(popup: Page, action: () => Promise<void>) {
     const closed = popup.waitForEvent('close');
-    await this.submitButton(popup)
-      .click()
-      .catch((error: Error) => {
-        if (!/has been closed/.test(error.message)) throw error;
-      });
+    await action().catch((error: Error) => {
+      if (!/has been closed/.test(error.message)) throw error;
+    });
     await closed;
   }
 
-  // Enter closes the window mid-keypress and rejects the press, so the
-  // Space key (which activates on keyup) is used instead.
+  async submit(popup: Page) {
+    await this.untilClosed(popup, () => this.submitButton(popup).click());
+  }
+
+  // Space activates the button on keyup, so the window closes during the key
+  // release (Enter would close it mid-keydown).
   async submitWithKeyboard(popup: Page) {
-    const closed = popup.waitForEvent('close');
     await this.submitButton(popup).focus();
-    await popup.keyboard.down('Space');
-    await popup.keyboard.up('Space');
-    await closed;
+    await this.untilClosed(popup, async () => {
+      await popup.keyboard.down('Space');
+      await popup.keyboard.up('Space');
+    });
   }
 }
