@@ -10,6 +10,8 @@
     "test:api": "npx playwright test tests/api.spec.ts",
     "test:redirect": "npx playwright test tests/redirect.spec.ts",
     "test:menu": "npx playwright test tests/menu.spec.ts",
+    "report:build": "node scripts/report/build-report.mjs",
+    "test:report": "node --test report-tests/build/build-report.test.mjs && playwright test -c playwright.report.config.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.ts\"",

@@ -12,10 +12,17 @@
 
 | Report | Link |
 |--------|------|
-| 🎨 Custom Dashboard | [defused15.github.io/QA-Playground-Tests/dashboard.html](https://defused15.github.io/QA-Playground-Tests/dashboard.html) |
-| 🎭 Playwright Native | [defused15.github.io/QA-Playground-Tests](https://defused15.github.io/QA-Playground-Tests/) |
+| 📊 E2E report | [defused15.github.io/QA-Playground-Tests](https://defused15.github.io/QA-Playground-Tests/) |
+| 🎭 Raw Playwright report | [defused15.github.io/QA-Playground-Tests/playwright/](https://defused15.github.io/QA-Playground-Tests/playwright/) |
 
-Reports are automatically deployed to GitHub Pages on every push to `main`.
+The E2E report lists every test per browser with its steps, errors, screenshots, videos, retries and a link to the trace in Playwright's Trace Viewer. Run history across CI runs lives on the [QA Hub](https://qa.rcastillo.dev/projects/QA-Playground-Tests.html). Both reports are deployed to GitHub Pages on every push to `main`.
+
+To build and preview the report locally after a run (`npx playwright test` writes `playwright-report/report.json`):
+
+```sh
+npm run report:build            # playwright-report/report.json -> site/
+npx serve site                  # or any static file server
+```
 
 ---
 
@@ -85,9 +92,10 @@ QA-Playground-Tests/
 │   └── fixtures/upload/          # Small files used by the upload spec
 │
 ├── __snapshots__/                # Visual baselines (per browser and OS)
-├── reporter-template.html        # Custom dashboard template
-├── generate-dashboard.mjs        # Dashboard generation script
+├── scripts/report/               # Builds the static E2E report page (site/)
+├── report-tests/                 # Tests for the report page (build + UI)
 ├── playwright.config.ts
+├── playwright.report.config.mjs  # Config for the report page tests only
 ├── package.json
 │
 └── .github/
@@ -132,23 +140,18 @@ npx playwright test tests/jiraboard.spec.ts
 # Lint and format (ESLint with the Google config, Prettier)
 npm run lint
 npm run format
-
-# Run with the JSON reporter (required for the custom dashboard)
-npx playwright test --reporter=html,json
 ```
 
-### Generating the Custom Dashboard
+### Building the Report Page
 
-After running tests with the JSON reporter, generate the dashboard locally:
+`npx playwright test` writes the native HTML report and `playwright-report/report.json`. Build the static report page from it:
 
 ```sh
-node generate-dashboard.mjs \
-  --json     ./playwright-report/report.json \
-  --html     ./playwright-report/dashboard.html \
-  --template ./reporter-template.html
+npm run report:build    # writes site/index.html, site/assets/, site/attachments/ and site/playwright/
+npm run test:report     # tests for the report page itself (fixture data, Chromium and WebKit)
 ```
 
-Then open `playwright-report/dashboard.html` in your browser.
+Open `site/` with any static file server (for example `npx serve site`).
 
 ---
 
@@ -161,9 +164,11 @@ On the first day of each month, a `keepalive` job re-enables the workflow throug
 The pipeline:
 1. Installs dependencies and Playwright browsers
 2. Runs all tests across Chromium, Firefox, and WebKit
-3. Generates the custom HTML dashboard from the JSON output
+3. Builds the E2E report page from the JSON output into `site/`
 4. Uploads the report folder as a downloadable artifact (retained 30 days)
-5. Deploys both reports to GitHub Pages
+5. Deploys `site/` to GitHub Pages (the report page, plus the raw Playwright report under `/playwright/`)
+
+A separate `report-ui` job tests the report page itself with fixture data.
 
 See the full workflow: [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)
 

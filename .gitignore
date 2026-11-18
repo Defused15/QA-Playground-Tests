@@ -5,3 +5,7 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Static E2E report (scripts/report)
+/site/
+/report-tests/.site/
