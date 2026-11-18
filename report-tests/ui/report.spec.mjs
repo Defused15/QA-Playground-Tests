@@ -43,6 +43,41 @@ const inDrawer = (page) =>
   page.evaluate(() => !!document.activeElement.closest('.drawer'));
 const search = (page) => page.getByRole('searchbox', { name: 'Search tests' });
 
+// The table holds an inline min-height only while it transitions.
+const tableSettled = (page) =>
+  expect
+    .poll(() => page.locator('#table').evaluate((el) => el.style.minHeight))
+    .toBe('');
+
+// Search applies after a short debounce. The URL is synced in the same step
+// that re-renders the table, so it signals the filter has been applied.
+async function searchFor(page, text) {
+  await search(page).fill(text);
+  await expect
+    .poll(() =>
+      page.evaluate(() => new URLSearchParams(location.search).get('q') ?? '')
+    )
+    .toBe(text.trim());
+  await tableSettled(page);
+}
+
+// Resolves after two animation frames: input and scroll have been processed.
+const nextFrames = (page) =>
+  page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      )
+  );
+
+// Waits for the element's running CSS transitions and animations to finish.
+const animationsDone = (locator) =>
+  locator.evaluate((el) =>
+    Promise.all(
+      el.getAnimations({ subtree: true }).map((a) => a.finished.catch(() => {}))
+    )
+  );
+
 // ── Content ───────────────────────────────────────────────────────────────────
 
 test('hero, summary and needs attention describe the run', async ({ page }) => {
@@ -130,13 +165,12 @@ test('hostile titles render as text and never execute', async ({ page }) => {
     d.dismiss();
   });
   await open(page, '/hostile/');
-  await page.waitForTimeout(200);
 
   // Only the (empty) lightbox image exists; nothing was injected.
-  expect(await page.locator('.page img, img[src="x"]').count()).toBe(0);
-  expect(await page.locator('script').count()).toBe(3); // theme, data, client
+  await expect(page.locator('.page img, img[src="x"]')).toHaveCount(0);
+  await expect(page.locator('script')).toHaveCount(3); // theme, data, client
 
-  await search(page).fill('</script>');
+  await searchFor(page, '</script>');
   const row = page.locator('.t-open', { hasText: '</script><img' });
   await expect(row).toHaveCount(3);
   expect(await row.first().textContent()).toBe(HOSTILE_TITLE);
@@ -145,13 +179,13 @@ test('hostile titles render as text and never execute', async ({ page }) => {
   expect(await page.locator('#dr-title').textContent()).toBe(HOSTILE_TITLE);
   await page.keyboard.press('Escape');
 
-  await search(page).fill('$&');
+  await searchFor(page, '$&');
   const dollar = page.locator('.t-open', { hasText: DOLLAR_TITLE });
   await expect(dollar).toHaveCount(3);
   expect(await dollar.first().textContent()).toBe(DOLLAR_TITLE);
 
   // Error message and attachment names with markup stay literal.
-  await search(page).fill('');
+  await searchFor(page, '');
   await failingRow(page).click();
   await drawerOpen(page);
   await page.getByRole('tab', { name: 'Error' }).click();
@@ -162,7 +196,7 @@ test('hostile titles render as text and never execute', async ({ page }) => {
   await expect(
     page.locator('.thumb', { hasText: '<img src=x onerror=alert(3)>' })
   ).toHaveCount(1);
-  expect(await page.locator('.page img, img[src="x"]').count()).toBe(0);
+  await expect(page.locator('.page img, img[src="x"]')).toHaveCount(0);
   expect(dialogs).toBe(0);
 });
 
@@ -477,7 +511,7 @@ test('search and selects keep their controls in place', async ({ page }) => {
   await input.click();
   await page.keyboard.type('upload');
   await expect(rows(page)).toHaveCount(12);
-  await page.waitForTimeout(450);
+  await tableSettled(page);
   expect(Math.abs((await input.boundingBox()).y - before.y)).toBeLessThan(0.5);
 
   await input.fill('');
@@ -486,7 +520,7 @@ test('search and selects keep their controls in place', async ({ page }) => {
   const selBefore = await sel.boundingBox();
   await sel.selectOption('webkit');
   await expect(page.locator('.tt-count')).toHaveText('1–24 of 24 tests');
-  await page.waitForTimeout(450);
+  await tableSettled(page);
   expect(Math.abs((await sel.boundingBox()).y - selBefore.y)).toBeLessThan(0.5);
   for (const b of await page.locator('#table td.c-browser').allTextContents())
     expect(b).toBe('webkit');
@@ -652,8 +686,9 @@ test('drawer locks background scroll and closes on scrim click', async ({
   await drawerOpen(page);
   const y = await page.evaluate(() => scrollY);
   await page.mouse.move(200, 450);
+  await expect(page.locator('html')).toHaveClass(/\blocked\b/);
   await page.mouse.wheel(0, 800);
-  await page.waitForTimeout(250);
+  await nextFrames(page);
   expect(await page.evaluate(() => scrollY)).toBe(y);
   await page.mouse.click(120, 450);
   await drawerClosed(page);
@@ -698,7 +733,7 @@ async function touchDrag(page, from, dy, steps) {
       type: 'touchMove',
       touchPoints: [{ x, y: y + (dy * i) / steps }],
     });
-    await page.waitForTimeout(16);
+    await nextFrames(page); // one move per rendered frame, like a finger
   }
   await cdp.send('Input.dispatchTouchEvent', {
     type: 'touchEnd',
@@ -777,14 +812,14 @@ test('mobile: the sheet snaps back on a short drag and dismisses on a long one',
   await open(page);
   await failingRow(page).tap();
   await drawerOpen(page);
-  await page.waitForTimeout(550); // let the sheet finish sliding in
+  await animationsDone(page.locator('.drawer')); // sheet finished sliding in
   const head = await page.locator('.dr-title').boundingBox();
   const from = { x: head.x + 20, y: head.y + head.height / 2 };
   const sheetY = (await page.locator('.drawer').boundingBox()).y;
 
   // Short, slow drag: snaps back.
   await touchDrag(page, from, 50, 10);
-  await page.waitForTimeout(550);
+  await animationsDone(page.locator('.drawer'));
   await drawerOpen(page);
   expect(
     Math.abs((await page.locator('.drawer').boundingBox()).y - sheetY)
