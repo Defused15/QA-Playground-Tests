@@ -25,6 +25,6 @@ updates:
       # Bumped by hand together with the Docker image tag and the visual
       # baselines (npm run check:playwright-image enforces the match).
       - dependency-name: '@playwright/test'
-      # Major versions track the Node runtime (24 in CI); bump with Node.
+      # Major versions track the Node runtime (.nvmrc); bump them together.
       - dependency-name: '@types/node'
         update-types: [version-update:semver-major]

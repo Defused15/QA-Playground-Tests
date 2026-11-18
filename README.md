@@ -110,7 +110,7 @@ QA-Playground-Tests/
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v20+ (LTS recommended)
+- [Node.js](https://nodejs.org/) 26 LTS, the version in `.nvmrc` that CI also uses (`nvm use` picks it up)
 - [npm](https://www.npmjs.com/)
 
 ### Installation
