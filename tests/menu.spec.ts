@@ -17,65 +17,111 @@ test.describe('Menu Navigation', () => {
   });
 
   test('navigation buttons display', async () => {
-    await menu.buttonsDisplay();
+    await test.step('All navigation links are visible with their labels', async () => {
+      await menu.buttonsDisplay();
+    });
   });
 
   test('Home button', async ({ page }) => {
-    await menu.clickHome();
-    await expect(page).toHaveURL(MENU_URLS.home);
+    await test.step('Open Home', async () => {
+      await menu.clickHome();
+      await expect(page).toHaveURL(MENU_URLS.home);
+    });
   });
 
   test('About button', async ({ page }) => {
-    await menu.clickAbout();
-    await expect(page).toHaveURL(MENU_URLS.about);
-    await expect(menu.welcomeMessage).toHaveText('Welcome to the About Page');
+    await test.step('Open About', async () => {
+      await menu.clickAbout();
+      await expect(page).toHaveURL(MENU_URLS.about);
+    });
+
+    await test.step('About page shows its welcome message', async () => {
+      await expect(menu.welcomeMessage).toHaveText('Welcome to the About Page');
+    });
   });
 
   test('Blog button', async ({ page }) => {
-    await menu.clickBlog();
-    await expect(page).toHaveURL(MENU_URLS.blog);
-    await expect(menu.welcomeMessage).toHaveText('Welcome to the Blog Page');
+    await test.step('Open Blog', async () => {
+      await menu.clickBlog();
+      await expect(page).toHaveURL(MENU_URLS.blog);
+    });
+
+    await test.step('Blog page shows its welcome message', async () => {
+      await expect(menu.welcomeMessage).toHaveText('Welcome to the Blog Page');
+    });
   });
 
   test('Portfolio button', async ({ page }) => {
-    await menu.clickPortfolio();
-    await expect(page).toHaveURL(MENU_URLS.portfolio);
-    await expect(menu.welcomeMessage).toHaveText(
-      'Welcome to the Portfolio Page'
-    );
+    await test.step('Open Portfolio', async () => {
+      await menu.clickPortfolio();
+      await expect(page).toHaveURL(MENU_URLS.portfolio);
+    });
+
+    await test.step('Portfolio page shows its welcome message', async () => {
+      await expect(menu.welcomeMessage).toHaveText(
+        'Welcome to the Portfolio Page'
+      );
+    });
   });
 
   test('Contact button', async ({ page }) => {
-    await menu.clickContact();
-    await expect(page).toHaveURL(MENU_URLS.contact);
-    await expect(menu.welcomeMessage).toHaveText('Welcome to the Contact Page');
+    await test.step('Open Contact', async () => {
+      await menu.clickContact();
+      await expect(page).toHaveURL(MENU_URLS.contact);
+    });
+
+    await test.step('Contact page shows its welcome message', async () => {
+      await expect(menu.welcomeMessage).toHaveText(
+        'Welcome to the Contact Page'
+      );
+    });
   });
 
   test('Go Back button from About returns to home', async ({ page }) => {
-    await menu.clickAbout();
-    await expect(menu.welcomeButton).toBeVisible();
-    await menu.welcomeButton.click();
-    await expect(page).toHaveURL(MENU_URLS.base);
+    await test.step('Open About', async () => {
+      await menu.clickAbout();
+      await expect(menu.welcomeButton).toBeVisible();
+    });
+
+    await test.step('Go back to the menu', async () => {
+      await menu.welcomeButton.click();
+      await expect(page).toHaveURL(MENU_URLS.base);
+    });
   });
 
   test('Go Back button from Blog returns to home', async ({ page }) => {
-    await menu.clickBlog();
-    await expect(menu.welcomeButton).toBeVisible();
-    await menu.welcomeButton.click();
-    await expect(page).toHaveURL(MENU_URLS.base);
+    await test.step('Open Blog', async () => {
+      await menu.clickBlog();
+      await expect(menu.welcomeButton).toBeVisible();
+    });
+
+    await test.step('Go back to the menu', async () => {
+      await menu.welcomeButton.click();
+      await expect(page).toHaveURL(MENU_URLS.base);
+    });
   });
 
   test('Go Back button from Portfolio returns to home', async ({ page }) => {
-    await menu.clickPortfolio();
-    await expect(menu.welcomeButton).toBeVisible();
-    await menu.welcomeButton.click();
-    await expect(page).toHaveURL(MENU_URLS.base);
+    await test.step('Open Portfolio', async () => {
+      await menu.clickPortfolio();
+      await expect(menu.welcomeButton).toBeVisible();
+    });
+
+    await test.step('Go back to the menu', async () => {
+      await menu.welcomeButton.click();
+      await expect(page).toHaveURL(MENU_URLS.base);
+    });
   });
 
   test('Go Back button from Contact returns to home', async ({ page }) => {
-    await menu.clickContact();
-    await expect(menu.welcomeButton).toBeVisible();
-    await menu.welcomeButton.click();
-    await expect(page).toHaveURL(MENU_URLS.base);
+    await test.step('Open Contact', async () => {
+      await menu.clickContact();
+      await expect(menu.welcomeButton).toBeVisible();
+    });
+
+    await test.step('Go back to the menu', async () => {
+      await menu.welcomeButton.click();
+      await expect(page).toHaveURL(MENU_URLS.base);
+    });
   });
 });

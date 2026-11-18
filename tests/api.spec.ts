@@ -36,22 +36,30 @@ test.describe('API Test', () => {
   });
 
   test('API returns 100 posts', async () => {
-    expect(posts).toHaveLength(100);
+    await test.step('API returns exactly 100 posts', async () => {
+      expect(posts).toHaveLength(100);
+    });
   });
 
   test('UI renders all cards', async () => {
-    await expect(api.card).toHaveCount(posts.length);
+    await test.step('One card is rendered per post', async () => {
+      await expect(api.card).toHaveCount(posts.length);
+    });
   });
 
   test('Card titles match API data', async () => {
-    for (let i = 0; i < posts.length; i++) {
-      await expect(api.title.nth(i)).toHaveText(posts[i].title);
-    }
+    await test.step('Every card title matches its post', async () => {
+      for (let i = 0; i < posts.length; i++) {
+        await expect(api.title.nth(i)).toHaveText(posts[i].title);
+      }
+    });
   });
 
   test('Card bodies match API data', async () => {
-    for (let i = 0; i < posts.length; i++) {
-      await expect(api.body.nth(i)).toHaveText(posts[i].body);
-    }
+    await test.step('Every card body matches its post', async () => {
+      for (let i = 0; i < posts.length; i++) {
+        await expect(api.body.nth(i)).toHaveText(posts[i].body);
+      }
+    });
   });
 });

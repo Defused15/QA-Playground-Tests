@@ -17,18 +17,31 @@ test.describe('QR Code Generator', () => {
   });
 
   test('Generate QR Code', async () => {
-    await qr.inputField.fill('https://google.com');
-    await qr.generateButton.click();
-    await expect(qr.qrImage).toBeVisible();
-    // The QR bitmap comes from api.qrserver.com; the <img> is visible (alt-text box)
-    // before the bitmap arrives, so wait until the 200x200 image has actually decoded.
-    await expect(qr.qrImage).toHaveJSProperty('naturalWidth', 200);
-    await expect(qr.qrImage).toHaveScreenshot('qr/qr-code.png');
+    await test.step('Enter a URL and generate', async () => {
+      await qr.inputField.fill('https://google.com');
+      await qr.generateButton.click();
+    });
+
+    await test.step('QR image is rendered and loaded', async () => {
+      await expect(qr.qrImage).toBeVisible();
+      // The QR bitmap comes from api.qrserver.com; the <img> is visible (alt-text box)
+      // before the bitmap arrives, so wait until the 200x200 image has actually decoded.
+      await expect(qr.qrImage).toHaveJSProperty('naturalWidth', 200);
+    });
+
+    await test.step('QR image matches the baseline', async () => {
+      await expect(qr.qrImage).toHaveScreenshot('qr/qr-code.png');
+    });
   });
 
   // App has no input validation — empty string generates a QR
   test('Generate QR Code with empty input', async () => {
-    await qr.generateButton.click();
-    await expect(qr.qrImage).toBeVisible();
+    await test.step('Generate with an empty input', async () => {
+      await qr.generateButton.click();
+    });
+
+    await test.step('A QR image is still rendered', async () => {
+      await expect(qr.qrImage).toBeVisible();
+    });
   });
 });

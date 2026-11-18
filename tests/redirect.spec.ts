@@ -17,14 +17,24 @@ test.describe('Redirect', () => {
   });
 
   test('Redirection', async () => {
-    await redirect.startRedirectionChain();
-    await expect(redirect.backButton).toBeVisible();
+    await test.step('Start the redirection chain', async () => {
+      await redirect.startRedirectionChain();
+    });
+
+    await test.step('Chain ends on the final page', async () => {
+      await expect(redirect.backButton).toBeVisible();
+    });
   });
 
   test('Go Back button', async () => {
-    await redirect.startRedirectionChain();
-    await expect(redirect.backButton).toBeVisible();
-    await redirect.backButton.click();
-    await expect(redirect.redirectButton).toBeVisible();
+    await test.step('Complete the redirection chain', async () => {
+      await redirect.startRedirectionChain();
+      await expect(redirect.backButton).toBeVisible();
+    });
+
+    await test.step('Go back to the start page', async () => {
+      await redirect.backButton.click();
+      await expect(redirect.redirectButton).toBeVisible();
+    });
   });
 });

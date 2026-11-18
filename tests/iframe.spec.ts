@@ -17,25 +17,41 @@ test.describe('Nested iFrame', () => {
   });
 
   test('Outer iframe loads with title', async () => {
-    await expect(iframeApp.outerIframe).toBeVisible();
-    await expect(iframeApp.outerFrameTitle).toHaveText('First Level Iframe');
+    await test.step('Outer iframe is rendered', async () => {
+      await expect(iframeApp.outerIframe).toBeVisible();
+    });
+
+    await test.step('Outer iframe shows its title', async () => {
+      await expect(iframeApp.outerFrameTitle).toHaveText('First Level Iframe');
+    });
   });
 
   test('Inner iframe loads with title', async () => {
-    await expect(iframeApp.innerFrameTitle).toHaveText('Second Level Iframe');
+    await test.step('Inner iframe shows its title', async () => {
+      await expect(iframeApp.innerFrameTitle).toHaveText('Second Level Iframe');
+    });
   });
 
   test('Click Me link is visible in inner iframe', async () => {
-    await expect(iframeApp.clickMeLink).toBeVisible();
+    await test.step('Click Me link is rendered inside the inner iframe', async () => {
+      await expect(iframeApp.clickMeLink).toBeVisible();
+    });
   });
 
   test('Clicked message hidden before interaction', async () => {
-    await expect(iframeApp.clickedMessage).toBeHidden();
+    await test.step('Confirmation message is not shown on load', async () => {
+      await expect(iframeApp.clickedMessage).toBeHidden();
+    });
   });
 
   test('Click Me shows confirmation message', async () => {
-    await iframeApp.clickMeLink.click();
-    await expect(iframeApp.clickedMessage).toBeVisible();
-    await expect(iframeApp.clickedMessage).toHaveText('Button Clicked');
+    await test.step('Click the Click Me link', async () => {
+      await iframeApp.clickMeLink.click();
+    });
+
+    await test.step('Confirmation message is displayed', async () => {
+      await expect(iframeApp.clickedMessage).toBeVisible();
+      await expect(iframeApp.clickedMessage).toHaveText('Button Clicked');
+    });
   });
 });
