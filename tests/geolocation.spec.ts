@@ -12,6 +12,26 @@ const SYDNEY = { latitude: -33.8688, longitude: 151.2093 };
 
 let geolocation: Geolocation;
 
+// Without a grant, Firefox leaves the permission prompt pending; these
+// testing prefs make it deny instead, like Chromium and WebKit do. They
+// would also deny tests that grant the permission, so only the test that
+// needs them uses this variant (it runs in its own worker). Other browsers
+// ignore Firefox prefs.
+const testWithoutGrant = test.extend({
+  launchOptions: [
+    async ({ launchOptions }, use) => {
+      await use({
+        ...launchOptions,
+        firefoxUserPrefs: {
+          'geo.prompt.testing': true,
+          'geo.prompt.testing.allow': false,
+        },
+      });
+    },
+    { scope: 'worker' },
+  ],
+});
+
 test.describe('Geolocation', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     await testSetup(page, testInfo);
@@ -210,25 +230,20 @@ test.describe('Geolocation', () => {
   });
 
   test.describe('Negative cases', () => {
-    test('Permission not granted shows an allow-access message', async ({
-      browserName,
-    }) => {
-      // eslint-disable-next-line playwright/no-skipped-test -- browser limitation, not a pending test
-      test.skip(
-        browserName === 'firefox',
-        'Firefox leaves the permission prompt pending instead of denying'
-      );
+    testWithoutGrant(
+      'Permission not granted shows an allow-access message',
+      async () => {
+        await test.step('Click Get Location without permission', async () => {
+          await geolocation.getLocation();
+        });
 
-      await test.step('Click Get Location without permission', async () => {
-        await geolocation.getLocation();
-      });
-
-      await test.step('Verify permission denied message', async () => {
-        await expect(geolocation.locationInfo).toHaveText(
-          LOCATION_MESSAGES.permissionDenied
-        );
-      });
-    });
+        await test.step('Verify permission denied message', async () => {
+          await expect(geolocation.locationInfo).toHaveText(
+            LOCATION_MESSAGES.permissionDenied
+          );
+        });
+      }
+    );
 
     test('Permission denied error shows an allow-access message', async ({
       page,
