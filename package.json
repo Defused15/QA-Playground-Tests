@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Defused15/QA-Playground-Tests#readme",
   "devDependencies": {
-    "@playwright/test": "^1.54.0",
+    "@playwright/test": "^1.65.1",
     "@types/node": "^22.15.18",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
