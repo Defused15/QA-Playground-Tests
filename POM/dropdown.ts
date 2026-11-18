@@ -19,6 +19,7 @@ export class Dropdown {
   readonly animals: Locator;
   readonly settingsBack: Locator;
   readonly animalsBack: Locator;
+  readonly transitioningMenus: Locator;
 
   constructor(page: Page) {
     this.navItems = page
@@ -30,6 +31,8 @@ export class Dropdown {
     // The dropdown panel and menu wrappers are unlabelled divs.
     this.panel = page.locator('.dropdown');
     this.menuItems = this.panel.locator('.menu').getByRole('link');
+    // Menus mid CSS transition carry *-enter-active / *-exit-active classes.
+    this.transitioningMenus = this.panel.locator('.menu[class*="-active"]');
     this.myProfile = this.panel.getByRole('link', { name: 'My Profile' });
     this.settings = this.panel.getByRole('link', {
       name: 'Settings',

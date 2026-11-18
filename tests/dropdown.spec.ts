@@ -181,24 +181,30 @@ test.describe('Multi Level Dropdown', () => {
       });
     });
 
-    // WebKit does not move Tab focus to links by default, so focus is set
-    // directly and only Enter is used to activate items.
-    test('Dropdown is operable with the keyboard', async ({ page }) => {
+    // WebKit does not move Tab focus to links by default, so items are focused
+    // directly. The app re-renders the menu items when it sets the panel height
+    // and while a submenu slides in, which drops focus to <body>. Each key press
+    // therefore waits for the panel to settle first.
+    const menuSettled = async () => {
+      await expect(dropdown.panel).toHaveAttribute('style', /height: \d+px/);
+      await expect(dropdown.transitioningMenus).toHaveCount(0);
+    };
+
+    test('Dropdown is operable with the keyboard', async () => {
       await test.step('Open the dropdown with Enter', async () => {
-        await dropdown.toggle.focus();
-        await page.keyboard.press('Enter');
+        await dropdown.toggle.press('Enter');
         await expect(dropdown.settings).toBeVisible();
       });
 
       await test.step('Enter the Animals submenu with Enter', async () => {
-        await dropdown.animals.focus();
-        await page.keyboard.press('Enter');
+        await menuSettled();
+        await dropdown.animals.press('Enter');
         await expect(dropdown.link('Frog')).toBeVisible();
       });
 
       await test.step('Go back with Enter on the header item', async () => {
-        await dropdown.animalsBack.focus();
-        await page.keyboard.press('Enter');
+        await menuSettled();
+        await dropdown.animalsBack.press('Enter');
         await expect(dropdown.myProfile).toBeVisible();
       });
     });
