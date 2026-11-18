@@ -22,3 +22,6 @@ updates:
       # ESLint 9+ needs flat config, which eslint-config-google doesn't support.
       - dependency-name: eslint
         update-types: [version-update:semver-major]
+      # Bumped by hand together with the Docker image tag and the visual
+      # baselines (npm run check:playwright-image enforces the match).
+      - dependency-name: '@playwright/test'

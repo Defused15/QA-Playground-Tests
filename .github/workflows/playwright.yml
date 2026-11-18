@@ -49,16 +49,28 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      - name: Check Playwright image matches the installed version
+        run: npm run check:playwright-image
+
   # One job per browser, in parallel. Each writes a blob report that the
   # `report` job merges. Workers stay at 1 per job (3 sessions in total)
   # to keep the load on the shared external site low.
   e2e-tests:
     # Skip the full suite on the monthly keepalive tick.
     if: github.event.schedule != '0 5 1 * *'
-    # Pinned: ubuntu-latest moved to 26.04, and the Linux visual baselines in
-    # __snapshots__ were recorded on 24.04. Bump together with a baseline refresh.
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    # Official Playwright image: Ubuntu 24.04 with the browsers and their
+    # system dependencies preinstalled, the same image that records the
+    # visual baselines (npm run test:visual:update). The tag must match
+    # @playwright/test; the quality job checks it. Runs as the runner's
+    # uid so Firefox doesn't refuse to start as root.
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
+      options: --user 1001
+    env:
+      # Enables the pixel comparisons (see ignoreSnapshots in the config).
+      PW_VISUAL: '1'
     strategy:
       fail-fast: false
       matrix:
@@ -76,27 +88,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Read Playwright version
-        id: pw
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
-
-      # Browser binaries are cached per Playwright version and browser; the
-      # OS packages they need are always installed (they are not cacheable).
-      - name: Cache Playwright browsers
-        id: browsers
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-24.04-${{ steps.pw.outputs.version }}-${{ matrix.browser }}
-
-      - name: Install ${{ matrix.browser }} with system dependencies
-        if: steps.browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps ${{ matrix.browser }}
-
-      - name: Install system dependencies for cached ${{ matrix.browser }}
-        if: steps.browsers.outputs.cache-hit == 'true'
-        run: npx playwright install-deps ${{ matrix.browser }}
 
       # Failures don't stop the job: the merged report is still published,
       # and the `report` job fails the run afterwards.
@@ -183,16 +174,10 @@ jobs:
           hub_repo: Defused15/test-hub
           project_name: QA-Playground-Tests
 
-      # Fail AFTER publishing, so a red run still has a report to inspect.
+      # Fail AFTER publishing, so a red run still has a report to inspect:
+      # no tests ran, any test failed, or an executed test has no test.step.
       - name: Check test results
-        run: |
-          node -e "
-            const s = require('./playwright-report/report.json').stats;
-            const total = s.expected + s.unexpected + s.flaky + s.skipped;
-            console.log('passed ' + s.expected + ', failed ' + s.unexpected + ', flaky ' + s.flaky + ', skipped ' + s.skipped);
-            if (total === 0) { console.error('No tests ran'); process.exit(1); }
-            if (s.unexpected > 0) { console.error(s.unexpected + ' test(s) failed'); process.exit(1); }
-          "
+        run: npm run check:results -- playwright-report/report.json
 
   # Checks the report page itself (build script, layout, keyboard, touch,
   # contrast, escaping) against fixture data. No external sites involved.
@@ -200,6 +185,9 @@ jobs:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
+      options: --user 1001
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -212,25 +200,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Read Playwright version
-        id: pw
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Playwright browsers
-        id: browsers
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-24.04-${{ steps.pw.outputs.version }}-chromium-webkit
-
-      - name: Install Chromium and WebKit with system dependencies
-        if: steps.browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium webkit
-
-      - name: Install system dependencies for cached browsers
-        if: steps.browsers.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium webkit
 
       - name: Run report page tests
         run: npm run test:report
