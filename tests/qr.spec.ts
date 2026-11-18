@@ -20,6 +20,9 @@ test.describe('QR Code Generator', () => {
     await qr.inputField.fill('https://google.com');
     await qr.generateButton.click();
     await expect(qr.qrImage).toBeVisible();
+    // The QR bitmap comes from api.qrserver.com; the <img> is visible (alt-text box)
+    // before the bitmap arrives, so wait until the 200x200 image has actually decoded.
+    await expect(qr.qrImage).toHaveJSProperty('naturalWidth', 200);
     await expect(qr.qrImage).toHaveScreenshot('qr/qr-code.png');
   });
 
