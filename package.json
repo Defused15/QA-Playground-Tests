@@ -10,10 +10,10 @@
     "test:api": "npx playwright test tests/api.spec.ts",
     "test:redirect": "npx playwright test tests/redirect.spec.ts",
     "test:menu": "npx playwright test tests/menu.spec.ts",
-    "test:test": "npx playwright test tests/test.spec.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write \"**/*.ts\""
+    "format": "prettier --write \"**/*.ts\"",
+    "format:check": "prettier --check \"**/*.ts\""
   },
   "repository": {
     "type": "git",
