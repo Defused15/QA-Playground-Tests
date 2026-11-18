@@ -11,13 +11,15 @@
     "test:redirect": "npx playwright test tests/redirect.spec.ts",
     "test:menu": "npx playwright test tests/menu.spec.ts",
     "report:build": "node scripts/report/build-report.mjs",
-    "test:report": "node --test report-tests/build/build-report.test.mjs && playwright test -c playwright.report.config.mjs",
+    "test:report": "node --test report-tests/build/build-report.test.mjs report-tests/build/check-results.test.mjs && playwright test -c playwright.report.config.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.ts\"",
     "format:check": "prettier --check \"**/*.ts\"",
     "test:visual": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work -e PW_VISUAL=1 mcr.microsoft.com/playwright:v1.65.1-noble bash -c 'npm ci --no-audit --no-fund && npx playwright test --grep @visual'",
-    "test:visual:update": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work -e PW_VISUAL=1 mcr.microsoft.com/playwright:v1.65.1-noble bash -c 'npm ci --no-audit --no-fund && npx playwright test --grep @visual --update-snapshots=all'"
+    "test:visual:update": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work -e PW_VISUAL=1 mcr.microsoft.com/playwright:v1.65.1-noble bash -c 'npm ci --no-audit --no-fund && npx playwright test --grep @visual --update-snapshots=all'",
+    "check:results": "node scripts/ci/check-results.mjs",
+    "check:playwright-image": "node scripts/ci/check-playwright-image.mjs"
   },
   "repository": {
     "type": "git",
