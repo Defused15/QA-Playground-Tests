@@ -64,10 +64,11 @@ jobs:
     # system dependencies preinstalled, the same image that records the
     # visual baselines (npm run test:visual:update). The tag must match
     # @playwright/test; the quality job checks it. Runs as the runner's
-    # uid so Firefox doesn't refuse to start as root.
+    # uid so Firefox doesn't refuse to start as root, and shares the host
+    # IPC namespace so Chromium doesn't run out of shared memory.
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble
-      options: --user 1001
+      options: --user 1001 --ipc=host
     env:
       # Enables the pixel comparisons (see ignoreSnapshots in the config).
       PW_VISUAL: '1'
@@ -187,7 +188,7 @@ jobs:
     timeout-minutes: 20
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble
-      options: --user 1001
+      options: --user 1001 --ipc=host
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
