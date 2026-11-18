@@ -34,9 +34,16 @@ export class Popup {
     return popup;
   }
 
+  // Submit calls window.close() in its onclick, so the window can close while
+  // the click action is still finishing. Only that closure error is ignored;
+  // awaiting the close event still proves the window actually closed.
   async submit(popup: Page) {
     const closed = popup.waitForEvent('close');
-    await this.submitButton(popup).click();
+    await this.submitButton(popup)
+      .click()
+      .catch((error: Error) => {
+        if (!/has been closed/.test(error.message)) throw error;
+      });
     await closed;
   }
 
