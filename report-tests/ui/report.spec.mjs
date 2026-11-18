@@ -345,35 +345,63 @@ test('paging keeps the pager under the cursor and keeps focus', async ({
 
 /** Click a filter and sample the control position and table height every frame. */
 async function filterAndSample(page, label) {
+  // Samples every animation frame for one second, with timestamps. Checks
+  // below are time-based, not frame-count based, so a slower machine (fewer
+  // frames) measures the same transition.
   await page.evaluate(() => {
     const mount = document.getElementById('table');
     const seg = mount.querySelector('.seg');
     window.__frames = [];
-    const tick = () => {
+    let start = 0;
+    const tick = (t) => {
+      start ||= t;
       window.__frames.push({
+        t,
         h: mount.getBoundingClientRect().height,
         segY: seg.getBoundingClientRect().top,
       });
-      if (window.__frames.length < 60) requestAnimationFrame(tick);
+      if (t - start < 1000) requestAnimationFrame(tick);
+      else window.__sampled = true;
     };
+    window.__sampled = false;
     requestAnimationFrame(tick);
   });
   await page.locator('#table .seg button', { hasText: label }).click();
-  await page.waitForFunction(() => window.__frames.length >= 60);
+  await page.waitForFunction(() => window.__sampled);
   return page.evaluate(() => window.__frames);
 }
 
+// Time from the last frame at the start value to the first within half a
+// pixel of the end value. The 280 ms ease-out collapse gets there after about
+// 190 ms, and fewer frames only make that span longer. A one-frame snap spans
+// a single frame interval: ~17 ms, up to ~100 ms on a slow CI runner.
+const MIN_TRANSITION_MS = 120;
+
+function expectGlide(frames, key) {
+  const start = frames[0][key];
+  const end = frames[frames.length - 1][key];
+  expect(Math.abs(end - start)).toBeGreaterThan(1);
+  const lastAtStart = frames.findLastIndex(
+    (f) => Math.abs(f[key] - start) < 0.5
+  );
+  const firstAtEnd = frames.findIndex((f) => Math.abs(f[key] - end) < 0.5);
+  expect(firstAtEnd).toBeGreaterThan(lastAtStart);
+  // It took transition time, not a single frame...
+  expect(frames[firstAtEnd].t - frames[lastAtStart].t).toBeGreaterThanOrEqual(
+    MIN_TRANSITION_MS
+  );
+  // ...and was caught at least once part-way.
+  expect(firstAtEnd - lastAtStart).toBeGreaterThanOrEqual(2);
+}
+
 function expectSmoothCollapse(frames) {
-  const start = frames[0].h;
-  const end = frames[frames.length - 1].h;
-  expect(end).toBeLessThan(start);
-  // Heights only go down, with several in-between frames (no one-frame snap).
+  expect(frames[frames.length - 1].h).toBeLessThan(frames[0].h);
+  // Heights only go down...
   for (let i = 1; i < frames.length; i++) {
     expect(frames[i].h).toBeLessThanOrEqual(frames[i - 1].h + 0.5);
   }
-  expect(
-    frames.filter((f) => f.h < start - 1 && f.h > end + 1).length
-  ).toBeGreaterThanOrEqual(3);
+  // ...and over transition time rather than in one frame.
+  expectGlide(frames, 'h');
 }
 
 async function expectNoBlankSpace(page) {
@@ -429,15 +457,10 @@ test('filtering near the end of the page glides instead of snapping', async ({
   const before = await page.locator('#table .seg').boundingBox();
   const frames = await filterAndSample(page, 'Failed');
   expectSmoothCollapse(frames);
-  // No movement on the click frame, and never more than half of the total
-  // movement in a single frame.
+  // No movement on the click frame; the controls then glide (over transition
+  // time, caught part-way) instead of jumping.
   expect(Math.abs(frames[0].segY - before.y)).toBeLessThan(0.5);
-  const total = Math.abs(frames[frames.length - 1].segY - before.y);
-  expect(total).toBeGreaterThan(0);
-  for (let i = 1; i < frames.length; i++) {
-    const step = Math.abs(frames[i].segY - frames[i - 1].segY);
-    expect(step).toBeLessThanOrEqual(total * 0.5 + 0.5);
-  }
+  expectGlide(frames, 'segY');
   // It ends at the bottom of the page with no blank space below the content.
   await expectNoBlankSpace(page);
   const atEnd = await page.evaluate(() =>
