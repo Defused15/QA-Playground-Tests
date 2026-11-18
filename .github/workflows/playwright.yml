@@ -5,11 +5,20 @@ on:
     branches: [ main, dev ]
   pull_request:
   schedule:
-    - cron: '0 6 * * *'  # Every day at 6:00 AM UTC
+    - cron: '0 6 * * 1'  # Weekly test run: Mondays at 6:00 AM UTC
+    - cron: '0 5 1 * *'  # Monthly keepalive (see `keepalive` job below)
+
+# Least privilege by default; jobs widen only what they need.
+permissions:
+  contents: read
 
 jobs:
   e2e-tests:
-    runs-on: ubuntu-latest
+    # Skip the full suite on the monthly keepalive tick.
+    if: github.event.schedule != '0 5 1 * *'
+    # Pinned: ubuntu-latest moved to 26.04, and the Linux visual baselines in
+    # __snapshots__ were recorded on 24.04. Bump together with a baseline refresh.
+    runs-on: ubuntu-24.04
 
     # Required so peaceiris/actions-gh-pages can push to the gh-pages branch
     permissions:
@@ -93,3 +102,20 @@ jobs:
           hub_token: ${{ secrets.HUB_TOKEN }}
           hub_repo: Defused15/test-hub
           project_name: QA-Playground-Tests
+
+  # GitHub disables scheduled workflows after 60 days without repository
+  # activity. Re-enabling the workflow through the API resets that timer
+  # without creating commits.
+  keepalive:
+    if: github.event_name == 'schedule' && github.event.schedule == '0 5 1 * *'
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+    steps:
+      - name: Re-enable this workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X PUT \
+            "repos/${{ github.repository }}/actions/workflows/playwright.yml/enable"
+          echo "Workflow keepalive sent"
