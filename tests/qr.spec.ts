@@ -5,6 +5,8 @@ import { QR } from '../POM/qr';
 
 let qr: QR;
 
+const QR_TEXT = 'https://google.com';
+
 test.describe('QR Code Generator', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     await testSetup(page, testInfo);
@@ -16,10 +18,9 @@ test.describe('QR Code Generator', () => {
     await testTeardown(page, testInfo);
   });
 
-  test('Generate QR Code', async () => {
+  test('Generate QR Code', { tag: '@visual' }, async () => {
     await test.step('Enter a URL and generate', async () => {
-      await qr.inputField.fill('https://google.com');
-      await qr.generateButton.click();
+      await qr.generate(QR_TEXT);
     });
 
     await test.step('QR image is rendered and loaded', async () => {
@@ -29,6 +30,12 @@ test.describe('QR Code Generator', () => {
       await expect(qr.qrImage).toHaveJSProperty('naturalWidth', 200);
     });
 
+    await test.step('QR code encodes the entered URL', async () => {
+      expect(await qr.decodeRenderedCode()).toBe(QR_TEXT);
+    });
+
+    // Pixel comparison runs only inside the Playwright container
+    // (CI and `npm run test:visual`); see ignoreSnapshots in the config.
     await test.step('QR image matches the baseline', async () => {
       await expect(qr.qrImage).toHaveScreenshot('qr/qr-code.png');
     });

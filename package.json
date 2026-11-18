@@ -15,7 +15,9 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"**/*.ts\"",
-    "format:check": "prettier --check \"**/*.ts\""
+    "format:check": "prettier --check \"**/*.ts\"",
+    "test:visual": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work -e PW_VISUAL=1 mcr.microsoft.com/playwright:v1.65.1-noble bash -c 'npm ci --no-audit --no-fund && npx playwright test --grep @visual'",
+    "test:visual:update": "docker run --rm --ipc=host -v \"$PWD\":/work -v /work/node_modules -w /work -e PW_VISUAL=1 mcr.microsoft.com/playwright:v1.65.1-noble bash -c 'npm ci --no-audit --no-fund && npx playwright test --grep @visual --update-snapshots=all'"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@playwright/test": "^1.65.1",
     "@types/node": "^24.19.2",
+    "@types/pngjs": "^6.0.5",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
     "eslint": "^8.57.1",
@@ -39,6 +42,8 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.10.4",
     "eslint-plugin-prettier": "^5.5.6",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3"
   }

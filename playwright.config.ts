@@ -15,6 +15,10 @@ export default defineConfig({
     ['json', { outputFile: 'playwright-report/report.json' }],
   ],
   snapshotDir: './__snapshots__',
+  /* Visual baselines are recorded and compared only inside the official
+     Playwright container (CI and `npm run test:visual`), so every machine
+     renders identically. Elsewhere pixel comparisons are skipped. */
+  ignoreSnapshots: !process.env.PW_VISUAL,
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://qaplayground.dev',
