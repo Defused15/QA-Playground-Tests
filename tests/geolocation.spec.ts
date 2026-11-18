@@ -213,6 +213,7 @@ test.describe('Geolocation', () => {
     test('Permission not granted shows an allow-access message', async ({
       browserName,
     }) => {
+      // eslint-disable-next-line playwright/no-skipped-test -- browser limitation, not a pending test
       test.skip(
         browserName === 'firefox',
         'Firefox leaves the permission prompt pending instead of denying'
