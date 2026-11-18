@@ -216,6 +216,25 @@ function copyRawReport(rawDir, outDir, inFile) {
   return true;
 }
 
+// The report used to live at dashboard.html, and other sites (the CV,
+// bookmarks) still link there. Keep that URL working by redirecting to the
+// page at the root.
+export const LEGACY_REDIRECT = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QA-Playground-Tests report</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="./">
+<meta http-equiv="refresh" content="0; url=./">
+<script>location.replace('./' + location.search + location.hash);</script>
+</head>
+<body>
+<p>The report has moved to <a href="./">the report page</a>.</p>
+</body>
+</html>
+`;
+
 /**
  * Build the site. options: { rawDir, generatedAt, pagesBase, hubUrl, repoUrl }
  */
@@ -247,6 +266,7 @@ export function build(inFile, outDir, options = {}) {
     out,
     renderPage(model, String(model.started || model.generatedAt))
   );
+  writeFileSync(join(outDir, 'dashboard.html'), LEGACY_REDIRECT);
   return { out, model, attachments: stats, rawReport: hasRaw };
 }
 

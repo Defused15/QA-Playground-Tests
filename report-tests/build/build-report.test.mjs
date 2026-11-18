@@ -14,7 +14,11 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { build, safeName } from '../../scripts/report/build-report.mjs';
+import {
+  build,
+  LEGACY_REDIRECT,
+  safeName,
+} from '../../scripts/report/build-report.mjs';
 import { buildModel, safeJson, stripAnsi } from '../../scripts/report/lib.mjs';
 import {
   mixedReport,
@@ -63,6 +67,13 @@ test('writes the page and its assets', () => {
   ]) {
     assert.ok(existsSync(join(work, 'site', f)), f + ' missing');
   }
+});
+
+test('the old dashboard.html URL redirects to the report page', () => {
+  const file = join(work, 'site', 'dashboard.html');
+  assert.equal(readFileSync(file, 'utf8'), LEGACY_REDIRECT);
+  assert.match(LEGACY_REDIRECT, /http-equiv="refresh" content="0; url=\.\/"/);
+  assert.match(LEGACY_REDIRECT, /location\.replace\('\.\/'/);
 });
 
 test('hostile titles cannot break out of the data block', () => {
