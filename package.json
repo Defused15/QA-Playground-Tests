@@ -1,8 +1,8 @@
 {
   "name": "qa-playground-tests",
   "version": "1.0.0",
+  "private": true,
   "description": "The QA Playground page has Mini Web Apps that I use to showcase my test skills.",
-  "main": "index.js",
   "scripts": {
     "test:all": "npx playwright test",
     "test:range": "npx playwright test tests/rangeslider.spec.ts",
@@ -22,7 +22,7 @@
     "url": "git+https://github.com/Defused15/QA-Playground-Tests.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Roberto Castillo",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -39,6 +39,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.10.4",
     "eslint-plugin-prettier": "^5.5.6",
-    "prettier": "^3.8.3"
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3"
   }
 }
