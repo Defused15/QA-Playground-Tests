@@ -51,13 +51,12 @@ jobs:
         run: npx playwright test --reporter=html,json
         continue-on-error: true   # don't abort the job on failures; we still want the report
 
-      # 6️⃣ Generate the custom dashboard from the JSON output
-      - name: Generate custom dashboard
-        run: |
-          node generate-dashboard.mjs \
-            --json      ./playwright-report/report.json \
-            --html      ./playwright-report/dashboard.html \
-            --template  ./reporter-template.html
+      # 6️⃣ Build the static report page from the JSON output into site/:
+      #    index.html + assets, attachments (screenshots, videos, traces) and
+      #    the native HTML report under site/playwright/ (without report.json)
+      - name: Build report page
+        if: always() && hashFiles('playwright-report/report.json') != ''
+        run: npm run report:build -- playwright-report/report.json site
 
       # 7️⃣ Upload the full report folder as a downloadable artifact
       - name: Upload reports as artifact
@@ -68,15 +67,15 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      # 8️⃣ Deploy to GitHub Pages (main branch only)
-      #    Custom dashboard: https://<user>.github.io/<repo>/dashboard.html
-      #    Native report:    https://<user>.github.io/<repo>/index.html
+      # 8️⃣ Deploy to GitHub Pages (main branch only). Only site/ is published:
+      #    Report page:       https://defused15.github.io/QA-Playground-Tests/
+      #    Raw native report: https://defused15.github.io/QA-Playground-Tests/playwright/
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./playwright-report
+          publish_dir: ./site
           # Keeps the gh-pages branch history clean (single orphan commit)
           force_orphan: true
 
@@ -102,6 +101,40 @@ jobs:
           hub_token: ${{ secrets.HUB_TOKEN }}
           hub_repo: Defused15/test-hub
           project_name: QA-Playground-Tests
+
+  # Checks the report page itself (build script, layout, keyboard, touch,
+  # contrast, escaping) against fixture data. No external sites involved.
+  report-ui:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers (Chromium and WebKit)
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run report page tests
+        run: npm run test:report
+
+      - name: Upload report page test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-page-tests
+          path: test-results/
+          retention-days: 14
 
   # GitHub disables scheduled workflows after 60 days without repository
   # activity. Re-enabling the workflow through the API resets that timer
