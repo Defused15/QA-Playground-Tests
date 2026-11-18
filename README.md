@@ -157,18 +157,19 @@ Open `site/` with any static file server (for example `npx serve site`).
 
 ## CI / CD
 
-This project uses **GitHub Actions** to run the full test suite on every push to `main` or `dev`, on every pull request, and on a weekly schedule (Mondays 06:00 UTC). The job runs on `ubuntu-24.04`, the OS the Linux visual baselines were recorded on.
+This project uses **GitHub Actions** to run the full test suite on every push to `main` or `dev`, on every pull request, and on a weekly schedule (Mondays 06:00 UTC). Jobs run on `ubuntu-24.04`, the OS the Linux visual baselines were recorded on.
 
-On the first day of each month, a `keepalive` job re-enables the workflow through the GitHub API. This resets GitHub's 60-day inactivity timer, so the schedule is not disabled when the repository goes quiet.
+| Job | What it does |
+|-----|--------------|
+| `quality` | ESLint (Google config), TypeScript type check and Prettier format check |
+| `e2e-tests` | One job per browser (Chromium, Firefox, WebKit) running in parallel, each producing a blob report. Browsers are cached per Playwright version |
+| `report` | Merges the blob reports, builds the report page into `site/`, uploads the reports as an artifact (30 days), deploys to GitHub Pages, pushes the JSON to the QA Test Hub, then fails the run if any test failed or none ran |
+| `report-ui` | Tests the report page itself (layout, keyboard, touch, contrast, escaping) with fixture data |
+| `keepalive` | Monthly: re-enables the workflow through the GitHub API, resetting GitHub's 60-day inactivity timer so the schedule is never disabled |
 
-The pipeline:
-1. Installs dependencies and Playwright browsers
-2. Runs all tests across Chromium, Firefox, and WebKit
-3. Builds the E2E report page from the JSON output into `site/`
-4. Uploads the report folder as a downloadable artifact (retained 30 days)
-5. Deploys `site/` to GitHub Pages (the report page, plus the raw Playwright report under `/playwright/`)
+Publishing to Pages and the QA Test Hub happens **only from `main`**: pull request and `dev` runs test everything but never replace the live report or the status badge. Superseded pull request runs are cancelled; runs on `main` queue so every publish completes.
 
-A separate `report-ui` job tests the report page itself with fixture data.
+Actions are pinned to full commit SHAs and kept current, together with the dev dependencies, by a monthly grouped Dependabot update.
 
 See the full workflow: [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)
 
@@ -187,6 +188,8 @@ This repository is integrated with the **[QA Test Hub](https://qa.rcastillo.dev)
 | [Playwright](https://playwright.dev/) | E2E test framework |
 | [TypeScript](https://www.typescriptlang.org/) | Language |
 | [Page Object Model](https://playwright.dev/docs/pom) | Test architecture |
+| [ESLint](https://eslint.org/) + [Google config](https://github.com/google/eslint-config-google) | Linting, with `eslint-plugin-playwright` |
+| [Prettier](https://prettier.io/) | Formatting |
 | [GitHub Actions](https://github.com/features/actions) | CI/CD |
 | [GitHub Pages](https://pages.github.com/) | Report hosting |
 
