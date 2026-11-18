@@ -1,4 +1,4 @@
-import { expect, Page, Locator } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export const MENU_URLS = {
   home: 'https://qaplayground.dev/apps/links/#',
@@ -20,27 +20,17 @@ export class Menu {
   readonly welcomeButton: Locator;
 
   constructor(page: Page) {
+    // The app's link bar is an unlabelled container, distinct from the site header nav.
     this.navBar = page.locator('#nav');
     this.homeLink = this.navBar.getByRole('link', { name: 'Home' });
     this.aboutLink = this.navBar.getByRole('link', { name: 'About' });
     this.blogLink = this.navBar.getByRole('link', { name: 'Blog' });
     this.portfolioLink = this.navBar.getByRole('link', { name: 'Portfolio' });
     this.contactLink = this.navBar.getByRole('link', { name: 'Contact' });
-    this.welcomeMessage = page.locator('#title');
+    this.welcomeMessage = page
+      .getByRole('main')
+      .getByRole('heading', { level: 1 });
     this.welcomeButton = page.getByRole('link', { name: 'Go Back' });
-  }
-
-  async buttonsDisplay() {
-    await expect(this.homeLink).toBeVisible();
-    await expect(this.homeLink).toHaveText('Home');
-    await expect(this.aboutLink).toBeVisible();
-    await expect(this.aboutLink).toHaveText('About');
-    await expect(this.blogLink).toBeVisible();
-    await expect(this.blogLink).toHaveText('Blog');
-    await expect(this.portfolioLink).toBeVisible();
-    await expect(this.portfolioLink).toHaveText('Portfolio');
-    await expect(this.contactLink).toBeVisible();
-    await expect(this.contactLink).toHaveText('Contact');
   }
 
   async clickHome() {

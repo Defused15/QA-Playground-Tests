@@ -7,8 +7,10 @@ export class Redirect {
 
   constructor(page: Page) {
     this.page = page;
-    this.redirectButton = page.locator('a#redirect');
-    this.backButton = page.locator('a.btn-green');
+    this.redirectButton = page.getByRole('link', {
+      name: 'Start Redirection chain',
+    });
+    this.backButton = page.getByRole('link', { name: 'Go Back' });
   }
 
   async startRedirectionChain() {

@@ -19,7 +19,6 @@
     "@typescript-eslint/no-unused-vars": "error",
     "no-var": "error",
     "prefer-const": "error",
-    "new-cap": "off",
-    "playwright/expect-expect": ["warn", { "assertFunctionNames": ["buttonsDisplay"] }]
+    "new-cap": "off"
   }
 }

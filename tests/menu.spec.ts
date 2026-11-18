@@ -18,7 +18,16 @@ test.describe('Menu Navigation', () => {
 
   test('navigation buttons display', async () => {
     await test.step('All navigation links are visible with their labels', async () => {
-      await menu.buttonsDisplay();
+      await expect(menu.homeLink).toBeVisible();
+      await expect(menu.homeLink).toHaveText('Home');
+      await expect(menu.aboutLink).toBeVisible();
+      await expect(menu.aboutLink).toHaveText('About');
+      await expect(menu.blogLink).toBeVisible();
+      await expect(menu.blogLink).toHaveText('Blog');
+      await expect(menu.portfolioLink).toBeVisible();
+      await expect(menu.portfolioLink).toHaveText('Portfolio');
+      await expect(menu.contactLink).toBeVisible();
+      await expect(menu.contactLink).toHaveText('Contact');
     });
   });
 
