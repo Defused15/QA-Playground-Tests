@@ -142,6 +142,22 @@ npm run lint
 npm run format
 ```
 
+### Visual Tests (Docker)
+
+Pixel comparisons (tests tagged `@visual`) run only inside the official Playwright image, `mcr.microsoft.com/playwright:v1.65.1-noble`, the same image CI uses. Every machine then renders identically, so there is one Linux baseline per browser. Outside the container these comparisons are skipped, while the rest of each test (for example decoding the QR code) still runs.
+
+With [Docker Desktop](https://www.docker.com/products/docker-desktop/) running:
+
+```sh
+# Compare against the baselines, exactly as CI does
+npm run test:visual
+
+# Re-record the baselines after an intended visual change (review the diff before committing)
+npm run test:visual:update
+```
+
+When upgrading `@playwright/test`, update the image tag in `package.json` and the workflow too (`npm run check:playwright-image` enforces the match), then re-record the baselines.
+
 ### Building the Report Page
 
 `npx playwright test` writes the native HTML report and `playwright-report/report.json`. Build the static report page from it:
@@ -157,13 +173,13 @@ Open `site/` with any static file server (for example `npx serve site`).
 
 ## CI / CD
 
-This project uses **GitHub Actions** to run the full test suite on every push to `main` or `dev`, on every pull request, and on a weekly schedule (Mondays 06:00 UTC). Jobs run on `ubuntu-24.04`, the OS the Linux visual baselines were recorded on.
+This project uses **GitHub Actions** to run the full test suite on every push to `main` or `dev`, on every pull request, and on a weekly schedule (Mondays 06:00 UTC). Jobs run on `ubuntu-24.04`; browser jobs run inside the official Playwright container, where the visual baselines are recorded.
 
 | Job | What it does |
 |-----|--------------|
-| `quality` | ESLint (Google config), TypeScript type check and Prettier format check |
-| `e2e-tests` | One job per browser (Chromium, Firefox, WebKit) running in parallel, each producing a blob report. Browsers are cached per Playwright version |
-| `report` | Merges the blob reports, builds the report page into `site/`, uploads the reports as an artifact (30 days), deploys to GitHub Pages, pushes the JSON to the QA Test Hub, then fails the run if any test failed or none ran |
+| `quality` | ESLint (Google config), TypeScript type check, Prettier format check, and a check that the Playwright Docker image tag matches `@playwright/test` |
+| `e2e-tests` | One job per browser (Chromium, Firefox, WebKit) running in parallel inside the official Playwright container, each producing a blob report. Visual comparisons run here |
+| `report` | Merges the blob reports, builds the report page into `site/`, uploads the reports as an artifact (30 days), deploys to GitHub Pages, pushes the JSON to the QA Test Hub, then fails the run if any test failed, none ran, or an executed test has no `test.step` |
 | `report-ui` | Tests the report page itself (layout, keyboard, touch, contrast, escaping) with fixture data |
 | `keepalive` | Monthly: re-enables the workflow through the GitHub API, resetting GitHub's 60-day inactivity timer so the schedule is never disabled |
 
@@ -217,7 +233,7 @@ All 26 mini apps on qaplayground.dev are covered: **324 tests per browser, 972 i
 | [New Tab](https://qaplayground.dev/apps/new-tab/) | [`newtab.spec.ts`](tests/newtab.spec.ts) | 10 | Link opening a new tab, opener isolation |
 | [Onboarding Modal](https://qaplayground.dev/apps/onboarding-modal/) | [`onboardingmodal.spec.ts`](tests/onboardingmodal.spec.ts) | 14 | Random welcome modal, open/close, dismissal gaps |
 | [Pop-Up Window](https://qaplayground.dev/apps/popup/) | [`popup.spec.ts`](tests/popup.spec.ts) | 9 | Popup window submit flow back to the opener |
-| [QR Code Generator](https://qaplayground.dev/apps/qr-code-generator/) | [`qr.spec.ts`](tests/qr.spec.ts) | 2 | QR rendering with a visual baseline |
+| [QR Code Generator](https://qaplayground.dev/apps/qr-code-generator/) | [`qr.spec.ts`](tests/qr.spec.ts) | 2 | Decoded QR content plus a visual baseline recorded in Docker |
 | [Range Slider](https://qaplayground.dev/apps/range-slider/) | [`rangeslider.spec.ts`](tests/rangeslider.spec.ts) | 12 | Slider ranges, emoji and background, feedback flow |
 | [Star Rating](https://qaplayground.dev/apps/rating/) | [`rating.spec.ts`](tests/rating.spec.ts) | 13 | Star selection labels, hover preview, accessibility gaps |
 | [Redirect Chain](https://qaplayground.dev/apps/redirect/) | [`redirect.spec.ts`](tests/redirect.spec.ts) | 2 | Redirect chain and Go Back |
