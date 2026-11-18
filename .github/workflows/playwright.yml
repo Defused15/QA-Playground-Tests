@@ -12,125 +12,232 @@ on:
 permissions:
   contents: read
 
+# One run per ref. A new push to a pull request cancels the superseded run;
+# runs on main queue instead, so every publish to Pages and the QA Hub finishes.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NODE_VERSION: '24'
+
 jobs:
+  # Fast static checks: lint (ESLint + Google config), types and formatting.
+  quality:
+    if: github.event.schedule != '0 5 1 * *'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit -p .
+
+      - name: Check formatting
+        run: npm run format:check
+
+  # One job per browser, in parallel. Each writes a blob report that the
+  # `report` job merges. Workers stay at 1 per job (3 sessions in total)
+  # to keep the load on the shared external site low.
   e2e-tests:
     # Skip the full suite on the monthly keepalive tick.
     if: github.event.schedule != '0 5 1 * *'
     # Pinned: ubuntu-latest moved to 26.04, and the Linux visual baselines in
     # __snapshots__ were recorded on 24.04. Bump together with a baseline refresh.
     runs-on: ubuntu-24.04
-
-    # Required so peaceiris/actions-gh-pages can push to the gh-pages branch
-    permissions:
-      contents: write
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [ chromium, firefox, webkit ]
 
     steps:
-      # 1️⃣ Checkout
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # 2️⃣ Node
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
 
-      # 3️⃣ Dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Browsers
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Read Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
 
-      # 5️⃣ Run tests — outputs native HTML report + JSON (JSON is what we need)
-      - name: Run Playwright Tests
+      # Browser binaries are cached per Playwright version and browser; the
+      # OS packages they need are always installed (they are not cacheable).
+      - name: Cache Playwright browsers
+        id: browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-24.04-${{ steps.pw.outputs.version }}-${{ matrix.browser }}
+
+      - name: Install ${{ matrix.browser }} with system dependencies
+        if: steps.browsers.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Install system dependencies for cached ${{ matrix.browser }}
+        if: steps.browsers.outputs.cache-hit == 'true'
+        run: npx playwright install-deps ${{ matrix.browser }}
+
+      # Failures don't stop the job: the merged report is still published,
+      # and the `report` job fails the run afterwards.
+      - name: Run Playwright tests (${{ matrix.browser }})
+        run: npx playwright test --project=${{ matrix.browser }} --reporter=blob
+        continue-on-error: true
+
+      - name: Upload blob report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: blob-report-${{ matrix.browser }}
+          path: blob-report/
+          retention-days: 1
+
+  # Merges the per-browser results, builds the report page, publishes it
+  # (main only) and fails the run if any test failed.
+  report:
+    needs: e2e-tests
+    if: always() && needs.e2e-tests.result != 'skipped' && needs.e2e-tests.result != 'cancelled'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      # Required so peaceiris/actions-gh-pages can push to the gh-pages branch
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download blob reports
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: blob-report-*
+          path: all-blob-reports
+          merge-multiple: true
+
+      # Produces the native HTML report and the JSON the page and the Hub read.
+      - name: Merge reports
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: playwright-report/report.json
-        run: npx playwright test --reporter=html,json
-        continue-on-error: true   # don't abort the job on failures; we still want the report
+        run: npx playwright merge-reports --reporter=html,json ./all-blob-reports
 
-      # 6️⃣ Build the static report page from the JSON output into site/:
-      #    index.html + assets, attachments (screenshots, videos, traces) and
-      #    the native HTML report under site/playwright/ (without report.json)
+      # site/: index.html + assets, attachments (screenshots, videos, traces)
+      # and the native HTML report under site/playwright/ (without report.json)
       - name: Build report page
-        if: always() && hashFiles('playwright-report/report.json') != ''
         run: npm run report:build -- playwright-report/report.json site
 
-      # 7️⃣ Upload the full report folder as a downloadable artifact
       - name: Upload reports as artifact
-        uses: actions/upload-artifact@v4
-        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
 
-      # 8️⃣ Deploy to GitHub Pages (main branch only). Only site/ is published:
-      #    Report page:       https://defused15.github.io/QA-Playground-Tests/
-      #    Raw native report: https://defused15.github.io/QA-Playground-Tests/playwright/
+      # Only site/ is published, and only from main (never from PRs or dev):
+      #   Report page:       https://defused15.github.io/QA-Playground-Tests/
+      #   Raw native report: https://defused15.github.io/QA-Playground-Tests/playwright/
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           # Keeps the gh-pages branch history clean (single orphan commit)
           force_orphan: true
 
-      # 9️⃣ Fail the job AFTER publishing the report if any tests failed
-      - name: Check test results
-        run: |
-          if [ -f ./playwright-report/report.json ]; then
-            UNEXPECTED=$(node -e "
-              const r = JSON.parse(require('fs').readFileSync('./playwright-report/report.json'));
-              console.log(r.stats?.unexpected ?? 0);
-            ")
-            if [ "$UNEXPECTED" -gt "0" ]; then
-              echo "❌ $UNEXPECTED test(s) failed"
-              exit 1
-            fi
-          fi
-
-      # 🔟 Push report to QA Hub so the combined dashboard picks it up
-      - name: Playwright Report & Push to QA Hub
-        if: always()
+      # Same rule as Pages: PR and dev runs must never replace the published
+      # report on the QA Hub (it drives the live status badge).
+      - name: Push report to QA Hub
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: ./.github/actions/playwright-report-hub
         with:
           hub_token: ${{ secrets.HUB_TOKEN }}
           hub_repo: Defused15/test-hub
           project_name: QA-Playground-Tests
 
+      # Fail AFTER publishing, so a red run still has a report to inspect.
+      - name: Check test results
+        run: |
+          node -e "
+            const s = require('./playwright-report/report.json').stats;
+            const total = s.expected + s.unexpected + s.flaky + s.skipped;
+            console.log('passed ' + s.expected + ', failed ' + s.unexpected + ', flaky ' + s.flaky + ', skipped ' + s.skipped);
+            if (total === 0) { console.error('No tests ran'); process.exit(1); }
+            if (s.unexpected > 0) { console.error(s.unexpected + ' test(s) failed'); process.exit(1); }
+          "
+
   # Checks the report page itself (build script, layout, keyboard, touch,
   # contrast, escaping) against fixture data. No external sites involved.
   report-ui:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-24.04
-    permissions:
-      contents: read
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers (Chromium and WebKit)
+      - name: Read Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-24.04-${{ steps.pw.outputs.version }}-chromium-webkit
+
+      - name: Install Chromium and WebKit with system dependencies
+        if: steps.browsers.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium webkit
+
+      - name: Install system dependencies for cached browsers
+        if: steps.browsers.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
 
       - name: Run report page tests
         run: npm run test:report
 
       - name: Upload report page test results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: report-page-tests
           path: test-results/
@@ -142,6 +249,7 @@ jobs:
   keepalive:
     if: github.event_name == 'schedule' && github.event.schedule == '0 5 1 * *'
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
       actions: write
     steps:
