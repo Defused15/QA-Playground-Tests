@@ -12,10 +12,13 @@ on:
 permissions:
   contents: read
 
-# One run per ref. A new push to a pull request cancels the superseded run;
-# runs on main queue instead, so every publish to Pages and the QA Hub finishes.
+# One run per pull request or branch. A new push to a pull request cancels
+# its superseded run; runs on main queue instead, so every publish to Pages
+# and the QA Hub finishes. Pull requests are grouped by number, not by ref:
+# an event that arrives after its PR was merged no longer has a PR ref and
+# must never land in main's group, where it would cancel main's runs.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
